@@ -1,20 +1,36 @@
 package controller
 
 import (
-	"context"
-	"errors"
-
-	"github.com/apache/rocketmq-client-go/v2/consumer"
-	"github.com/apache/rocketmq-client-go/v2/primitive"
 	"github.com/gin-gonic/gin"
+	"strings"
+	"web/global"
+	"web/model"
+	"web/utils/ecode"
 	"web/utils/xsq_net"
 )
 
-func FormParams(c *gin.Context) {
-
-	xsq_net.SucJson(c, c.ClientIP())
+type FangReq struct {
+	Mingcheng string `json:"mingcheng" form:"mingcheng"`
 }
 
-func SubscribeMsg(ctx context.Context, messages ...*primitive.MessageExt) (consumer.ConsumeResult, error) {
-	return consumer.ConsumeRetryLater, errors.New("异常")
+func Fang(c *gin.Context) {
+	var req FangReq
+
+	if err := c.ShouldBind(&req); err != nil {
+		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
+		return
+	}
+
+	var fang model.Fang
+
+	db := global.DB
+
+	result := db.Model(&model.Fang{}).Where(&model.Fang{Mingcheng: strings.Trim(req.Mingcheng, " ")}).First(&fang)
+
+	if result.Error != nil {
+		xsq_net.ErrorJSON(c, result.Error)
+		return
+	}
+
+	xsq_net.SucJson(c, fang)
 }

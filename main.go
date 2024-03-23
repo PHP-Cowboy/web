@@ -16,9 +16,7 @@ func main() {
 
 	initialize.InitMysql()
 
-	//initialize.InitJob()
-
-	initialize.InitRedis()
+	//initialize.InitRedis()
 
 	g := initialize.InitRouter()
 

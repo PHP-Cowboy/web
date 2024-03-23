@@ -9,6 +9,6 @@ func TestRoute(g *gin.RouterGroup) {
 	//登录
 	group := g.Group("/test")
 	{
-		group.POST("/formParams", controller.FormParams)
+		group.GET("/fang", controller.Fang)
 	}
 }
