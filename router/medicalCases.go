@@ -7,10 +7,9 @@ import (
 
 func MedicalCasesRoute(g *gin.RouterGroup) {
 	//医疗案例
-	medicalCasesGroup := g.Group("/medicalCases")
+	mg := g.Group("/medicalCases")
 	{
-		//列表
-		medicalCasesGroup.GET("/list", controller.MedicalCasesList)
-		medicalCasesGroup.POST("/detail", controller.MedicalCasesDetail)
+		mg.POST("/list", controller.MedicalCasesList)     //列表
+		mg.POST("/detail", controller.MedicalCasesDetail) //详情
 	}
 }

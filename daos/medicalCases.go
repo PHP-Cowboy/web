@@ -7,6 +7,7 @@ import (
 	"web/model"
 )
 
+// 医疗案例列表
 func MedicalCasesList(form req.MedicalCasesList) (res rsp.MedicalCasesRsp, err error) {
 	db := global.DB
 
@@ -50,6 +51,7 @@ func MedicalCasesList(form req.MedicalCasesList) (res rsp.MedicalCasesRsp, err e
 	return
 }
 
+// 医疗案例详情
 func MedicalCasesDetail(form req.Id) (res rsp.MedicalCases, err error) {
 	db := global.DB
 

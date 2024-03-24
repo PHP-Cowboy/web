@@ -8,6 +8,7 @@ import (
 	"web/utils/xsq_net"
 )
 
+// 医疗案例列表
 func MedicalCasesList(c *gin.Context) {
 	var form req.MedicalCasesList
 
@@ -24,6 +25,7 @@ func MedicalCasesList(c *gin.Context) {
 	xsq_net.SucJson(c, res)
 }
 
+// 医疗案例详情
 func MedicalCasesDetail(c *gin.Context) {
 	var form req.Id
 
