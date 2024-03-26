@@ -1,16 +1,9 @@
 port: 9001
 mysql:
-  host: "localhost"
+  host: "116.62.178.130"
   port: 3306
   name: "test"
   user: "root"
-  password: "root"
+  password: "8!yJRAJwhH6t2xaK"
 jwt:
   key: 'ghlasdfkgbnkadfjbgnksdfjsdfgnbjk'
-redis:
-  host: 192.168.1.40
-  port: 6379
-  expire: 1
-  password: 'xxxx'
-rocket_mq: "192.168.1.40:9876"
-odbc: "odbc:server=192.168.1.40;user id=ding2;password=%&#c68%vM5;database=ETL_U8"

@@ -7,12 +7,10 @@ import (
 )
 
 func RoleRoute(g *gin.RouterGroup) {
-	roleGroup := g.Group("/role", middlewares.JWTAuth(), middlewares.IsSuperAdminAuth())
+	roleGroup := g.Group("/role", middlewares.JWTAuth())
 	{
 		//新增角色
 		roleGroup.POST("/create", controller.CreateRole)
-		//修改角色
-		roleGroup.POST("/change", controller.ChangeRole)
 		//角色列表
 		roleGroup.GET("/list", controller.GetRoleList)
 		//批量删除角色

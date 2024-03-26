@@ -7,7 +7,7 @@ import (
 )
 
 func DictRoute(g *gin.RouterGroup) {
-	roleGroup := g.Group("/dict", middlewares.JWTAuth(), middlewares.IsSuperAdminAuth())
+	roleGroup := g.Group("/dict", middlewares.JWTAuth())
 	{
 		//字典类型列表
 		roleGroup.GET("/dict_type_list", controller.DictTypeList)

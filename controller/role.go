@@ -34,50 +34,6 @@ func CreateRole(c *gin.Context) {
 	xsq_net.Success(c)
 }
 
-// 修改角色
-func ChangeRole(c *gin.Context) {
-	var form req.ChangeRoleForm
-
-	bindingBody := binding.Default(c.Request.Method, c.ContentType()).(binding.BindingBody)
-
-	if err := c.ShouldBindBodyWith(&form, bindingBody); err != nil {
-		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
-		return
-	}
-
-	db := global.DB
-
-	var role model.Role
-
-	result := db.First(&role, form.Id)
-
-	if result.Error != nil {
-		xsq_net.ErrorJSON(c, result.Error)
-		return
-	}
-
-	if result.RowsAffected == 0 {
-		xsq_net.ErrorJSON(c, ecode.RoleNotFound)
-		return
-	}
-
-	deleteTime, err := time.ParseInLocation(timeutil.TimeFormat, timeutil.GetDateTime(), time.Local)
-	if err != nil {
-		xsq_net.ErrorJSON(c, ecode.DataTransformationError)
-		return
-	}
-
-	if form.IsDelete {
-		result = db.Model(&role).Updates(model.Role{
-			Base: model.Base{
-				DeleteTime: deleteTime,
-			},
-		})
-	}
-
-	xsq_net.Success(c)
-}
-
 // 角色列表
 func GetRoleList(c *gin.Context) {
 	var form req.GetRoleListForm

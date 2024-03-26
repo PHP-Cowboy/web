@@ -15,9 +15,10 @@ func InitRouter() *gin.Engine {
 	router.BaseRoute(group)
 	//医案
 	router.MedicalCasesRoute(group)
-
 	//大数据
 	router.BigDataRoute(group)
+	//用户
+	router.UserRoute(group)
 
 	return r
 }

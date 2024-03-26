@@ -8,7 +8,7 @@ import (
 
 func MenuRoute(g *gin.RouterGroup) {
 
-	menuGroup := g.Group("/menu", middlewares.JWTAuth(), middlewares.IsSuperAdminAuth())
+	menuGroup := g.Group("/menu", middlewares.JWTAuth())
 	{
 		//菜单列表
 		menuGroup.GET("/list", controller.GetMenuList)

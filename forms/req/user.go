@@ -12,9 +12,16 @@ type GetUserListForm struct {
 	WarehouseId int `forms:"warehouse_id" json:"warehouse_id"`
 }
 
-type LoginForm struct {
-	Id       string `forms:"id" json:"id" binding:"required"`
-	Password string `json:"password" forms:"password" binding:"required"`
+type LoginByPwd struct {
+	Captcha  string `json:"captcha" binding:"required"`
+	Phone    string `json:"phone" binding:"required"`
+	Password string `json:"password" binding:"required"`
+}
+
+type Registration struct {
+	Phone    string `json:"phone" binding:"required"`
+	Code     int    `json:"code" binding:"required"`
+	Password string `json:"password" binding:"required"`
 }
 
 type CheckPwdForm struct {
@@ -22,7 +29,6 @@ type CheckPwdForm struct {
 	NewPassword string `json:"new_password"`
 	Name        string `json:"name"`
 	Status      int    `json:"status"`
-	RoleId      int    `json:"role_id"`
 }
 
 type BatchDeleteUserForm struct {
