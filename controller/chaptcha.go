@@ -18,7 +18,7 @@ func GetCaptcha(c *gin.Context) {
 		return
 	}
 	xsq_net.SucJson(c, gin.H{
-		"captchaId": id,
-		"path":      b64s,
+		"captcha_id": id,
+		"path":       b64s,
 	})
 }

@@ -13,9 +13,10 @@ type GetUserListForm struct {
 }
 
 type LoginByPwd struct {
-	Captcha  string `json:"captcha" binding:"required"`
-	Phone    string `json:"phone" binding:"required"`
-	Password string `json:"password" binding:"required"`
+	CaptchaId string `json:"captcha_id" binding:"required"`
+	Captcha   string `json:"captcha" binding:"required"`
+	Phone     string `json:"phone" binding:"required"`
+	Password  string `json:"password" binding:"required"`
 }
 
 type Registration struct {

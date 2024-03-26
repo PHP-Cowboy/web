@@ -10,7 +10,6 @@ import (
 	"strings"
 	"time"
 	"web/forms/req"
-	"web/forms/rsp"
 	"web/global"
 	"web/middlewares"
 	"web/model"
@@ -18,7 +17,7 @@ import (
 )
 
 // 密码登录
-func LoginByPwd(form req.LoginByPwd) (res *rsp.LoginByPhoneRsp, err error) {
+func LoginByPwd(form req.LoginByPwd) (token string, err error) {
 	user := model.User{}
 
 	db := global.DB
@@ -37,27 +36,24 @@ func LoginByPwd(form req.LoginByPwd) (res *rsp.LoginByPhoneRsp, err error) {
 	}
 
 	//验证密码
-	if !CheckPwd(form.Password) {
+
+	if !CheckPwd(form.Password, user.Password) {
 		err = ecode.PasswordCheckFailed
 		return
 	}
-
-	token := ""
 	//生成token
 	token, err = GetToken(&user)
-
-	res.Id = user.Id
-	res.Name = user.Name
-	res.Token = token
 
 	return
 }
 
 // 注册用户
-func Registration(req req.Registration) (res *rsp.LoginByPhoneRsp, err error) {
+func Registration(req req.Registration) (token string, err error) {
 	user := model.User{}
 
 	db := global.DB
+	//todo 校验短信验证码
+
 	obj := new(model.User)
 
 	err, user = obj.GetUserByPhone(db, req.Phone)
@@ -74,7 +70,9 @@ func Registration(req req.Registration) (res *rsp.LoginByPhoneRsp, err error) {
 
 	pwd := GenderPwd(req.Password)
 
-	obj = &model.User{
+	obj = &model.User{}
+
+	user = model.User{
 		Phone:    req.Phone,
 		OpenId:   "",
 		Name:     req.Phone,
@@ -82,29 +80,21 @@ func Registration(req req.Registration) (res *rsp.LoginByPhoneRsp, err error) {
 		Status:   model.UserStatusNormal,
 	}
 
-	err = obj.Save(db)
+	err = obj.Save(db, &user)
 
 	if err != nil {
 		return
 	}
-
-	token := ""
 
 	token, err = GetToken(obj)
-	if err != nil {
-		return
-	}
 
-	res.Id = user.Id
-	res.Name = user.Name
-	res.Token = token
 	return
 }
 
-// 验证密码并生成token
-func CheckPwd(pwd string) bool {
+// 验证密码
+func CheckPwd(pwd, basePwd string) bool {
 	options := &password.Options{16, 100, 32, sha512.New}
-	pwdSlice := strings.Split(pwd, "$")
+	pwdSlice := strings.Split(basePwd, "$")
 	return password.Verify(pwd, pwdSlice[1], pwdSlice[2], options)
 }
 

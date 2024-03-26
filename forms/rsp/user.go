@@ -22,9 +22,3 @@ type User struct {
 	Status      bool   `json:"status"` //bool
 	CreateTime  string `json:"create_time"`
 }
-
-type LoginByPhoneRsp struct {
-	Id    int    `json:"id"`
-	Token string `json:"token"`
-	Name  string `json:"name"`
-}

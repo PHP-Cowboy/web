@@ -24,6 +24,7 @@ var (
 	TokenExpired           = New(15, "token已过期")
 	RedisKeyDelFailed      = New(16, "redis key del failed")
 	CreateCaptchaError     = New(17, "生成验证码错误")
+	CheckCaptchaError      = New(18, "验证码错误")
 
 	UserNotFound            = New(1000, "用户未找到")
 	PhoneAlreadyExist       = New(1001, "手机号已存在，请勿重复注册")
