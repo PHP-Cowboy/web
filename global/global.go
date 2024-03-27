@@ -8,8 +8,6 @@ import (
 
 var (
 	DB           *gorm.DB
-	SqlServer    *gorm.DB
-	Redis        *RedisCli
 	ServerConfig = &config.ServerConfig{}
 	Logger       = make(map[string]*zap.SugaredLogger, 0)
 )

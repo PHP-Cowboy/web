@@ -11,6 +11,7 @@ func UserRoute(g *gin.RouterGroup) {
 	group := g.Group("/user")
 	{
 		group.POST("/loginByPhone", controller.LoginByPwd)
+		group.POST("/loginByCode", controller.LoginByCode)
 		group.POST("/registration", controller.Registration)
 	}
 

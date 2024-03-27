@@ -16,8 +16,6 @@ func main() {
 
 	initialize.InitMysql()
 
-	//initialize.InitRedis()
-
 	g := initialize.InitRouter()
 
 	serverConfig := global.ServerConfig
@@ -31,18 +29,8 @@ func main() {
 		}
 	}()
 
-	//queue, err := initialize.InitMsgQueue(serverConfig.RocketMQ)
-	//
-	//if err != nil {
-	//	panic("MQ失败:" + err.Error())
-	//}
-	//
-	//_ = queue.Start()
-
 	//接收终止信号
 	quit := make(chan os.Signal)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
-
-	//_ = queue.Shutdown()
 }

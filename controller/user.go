@@ -28,13 +28,29 @@ func LoginByPwd(c *gin.Context) {
 		return
 	}
 
-	//校验验证码
-	if !store.Verify(form.CaptchaId, form.Captcha, true) {
-		xsq_net.ErrorJSON(c, ecode.CheckCaptchaError)
+	token, err := daos.LoginByPwd(form)
+
+	if err != nil {
+		xsq_net.ErrorJSON(c, err)
 		return
 	}
 
-	token, err := daos.LoginByPwd(form)
+	xsq_net.SucJson(c, gin.H{"token": token})
+
+}
+
+// 验证码登录
+func LoginByCode(c *gin.Context) {
+	var form req.LoginByCode
+
+	bindingBody := binding.Default(c.Request.Method, c.ContentType()).(binding.BindingBody)
+
+	if err := c.ShouldBindBodyWith(&form, bindingBody); err != nil {
+		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
+		return
+	}
+
+	token, err := daos.LoginByCode(form)
 
 	if err != nil {
 		xsq_net.ErrorJSON(c, err)
