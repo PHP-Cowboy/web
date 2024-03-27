@@ -18,6 +18,11 @@ type LoginByPwd struct {
 	Password string `json:"password" binding:"required"`
 }
 
+type LoginByCode struct {
+	Phone string `json:"phone" binding:"required"`
+	Code  int    `json:"code" binding:"required"`
+}
+
 type Registration struct {
 	Phone    string `json:"phone" binding:"required"`
 	Code     int    `json:"code" binding:"required"`

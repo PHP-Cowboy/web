@@ -2,11 +2,14 @@ package daos
 
 import (
 	"crypto/sha512"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/anaskhan96/go-password-encoder"
 	"github.com/golang-jwt/jwt"
 	"gorm.io/gorm"
+	"io"
+	"net/http"
 	"strings"
 	"time"
 	"web/forms/req"
@@ -18,7 +21,7 @@ import (
 )
 
 // 密码登录
-func LoginByPwd(form req.LoginByPwd) (res *rsp.LoginByPhoneRsp, err error) {
+func LoginByPwd(form req.LoginByPwd) (token string, err error) {
 	user := model.User{}
 
 	db := global.DB
@@ -42,19 +45,45 @@ func LoginByPwd(form req.LoginByPwd) (res *rsp.LoginByPhoneRsp, err error) {
 		return
 	}
 
-	token := ""
-	//生成token
 	token, err = GetToken(&user)
 
-	res.Id = user.Id
-	res.Name = user.Name
-	res.Token = token
+	return
+}
+
+// 验证码登录
+func LoginByCode(form req.LoginByCode) (token string, err error) {
+	user := model.User{}
+
+	db := global.DB
+	obj := new(model.User)
+
+	err, user = obj.GetUserByPhone(db, form.Phone)
+
+	if err != nil {
+		return
+	}
+
+	//校验用户状态
+	if user.Status != model.UserStatusNormal {
+		err = ecode.UserNotFound
+		return
+	}
+
+	//验证手机号
+	err = MsgVerify(form.Phone, form.Code)
+
+	if err != nil {
+		return
+	}
+
+	//生成token
+	token, err = GetToken(&user)
 
 	return
 }
 
 // 注册用户
-func Registration(req req.Registration) (res *rsp.LoginByPhoneRsp, err error) {
+func Registration(req req.Registration) (token string, err error) {
 	user := model.User{}
 
 	db := global.DB
@@ -74,6 +103,13 @@ func Registration(req req.Registration) (res *rsp.LoginByPhoneRsp, err error) {
 
 	pwd := GenderPwd(req.Password)
 
+	//验证code
+	err = MsgVerify(req.Phone, req.Code)
+
+	if err != nil {
+		return
+	}
+
 	obj = &model.User{
 		Phone:    req.Phone,
 		OpenId:   "",
@@ -88,16 +124,11 @@ func Registration(req req.Registration) (res *rsp.LoginByPhoneRsp, err error) {
 		return
 	}
 
-	token := ""
-
 	token, err = GetToken(obj)
 	if err != nil {
 		return
 	}
 
-	res.Id = user.Id
-	res.Name = user.Name
-	res.Token = token
 	return
 }
 
@@ -126,5 +157,46 @@ func GetToken(user *model.User) (token string, err error) {
 
 	j := middlewares.NewJwt()
 	token, err = j.CreateToken(claims)
+	return
+}
+
+// 短信验证码校验
+func MsgVerify(phone string, code int) (err error) {
+	url := "https://webapi.sms.mob.com/sms/verify"
+
+	payload := strings.NewReader(fmt.Sprintf("appkey=%s&phone=%s&zone=86&code=%d", global.ServerConfig.Sms.AppKey, phone, code))
+
+	client := &http.Client{}
+
+	newRequest, err := http.NewRequest("POST", url, payload)
+
+	if err != nil {
+		return
+	}
+	newRequest.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+
+	res, err := client.Do(newRequest)
+	if err != nil {
+		return
+	}
+	defer res.Body.Close()
+
+	body, err := io.ReadAll(res.Body)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	result := &rsp.MsgVerifyRsp{}
+
+	err = json.Unmarshal(body, result)
+	if err != nil {
+		return
+	}
+
+	if result.Status != 200 {
+		err = errors.New(result.Error)
+	}
+
 	return
 }

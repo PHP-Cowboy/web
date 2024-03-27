@@ -28,14 +28,36 @@ func LoginByPwd(c *gin.Context) {
 		return
 	}
 
-	res, err := daos.LoginByPwd(form)
+	token, err := daos.LoginByPwd(form)
 
 	if err != nil {
 		xsq_net.ErrorJSON(c, err)
 		return
 	}
 
-	xsq_net.SucJson(c, res)
+	xsq_net.SucJson(c, gin.H{"token": token})
+
+}
+
+// 验证码登录
+func LoginByCode(c *gin.Context) {
+	var form req.LoginByCode
+
+	bindingBody := binding.Default(c.Request.Method, c.ContentType()).(binding.BindingBody)
+
+	if err := c.ShouldBindBodyWith(&form, bindingBody); err != nil {
+		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
+		return
+	}
+
+	token, err := daos.LoginByCode(form)
+
+	if err != nil {
+		xsq_net.ErrorJSON(c, err)
+		return
+	}
+
+	xsq_net.SucJson(c, gin.H{"token": token})
 
 }
 
@@ -50,14 +72,14 @@ func Registration(c *gin.Context) {
 		return
 	}
 
-	res, err := daos.Registration(form)
+	token, err := daos.Registration(form)
 
 	if err != nil {
 		xsq_net.ErrorJSON(c, err)
 		return
 	}
 
-	xsq_net.SucJson(c, res)
+	xsq_net.SucJson(c, gin.H{"token": token})
 }
 
 // 修改 名称 密码 状态 组织

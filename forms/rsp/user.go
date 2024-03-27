@@ -28,3 +28,8 @@ type LoginByPhoneRsp struct {
 	Token string `json:"token"`
 	Name  string `json:"name"`
 }
+
+type MsgVerifyRsp struct {
+	Status int    `json:"status"`
+	Error  string `json:"error"`
+}
