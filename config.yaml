@@ -1,9 +1,9 @@
 port: 9001
 mysql:
-  host: "116.62.178.130"
+  host: "localhost"
   port: 3306
   name: "test"
   user: "root"
-  password: "8!yJRAJwhH6t2xaK"
+  password: "root"
 jwt:
   key: 'ghlasdfkgbnkadfjbgnksdfjsdfgnbjk'
