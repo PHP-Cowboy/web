@@ -10,7 +10,7 @@ func UserRoute(g *gin.RouterGroup) {
 	//登录
 	group := g.Group("/user")
 	{
-		group.POST("/loginByPhone", controller.LoginByPwd)
+		group.POST("/loginByPwd", controller.LoginByPwd)
 		group.POST("/loginByCode", controller.LoginByCode)
 		group.POST("/registration", controller.Registration)
 	}

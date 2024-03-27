@@ -40,7 +40,7 @@ func LoginByPwd(form req.LoginByPwd) (token string, err error) {
 	}
 
 	//验证密码
-	if !CheckPwd(form.Password) {
+	if !CheckPwd(form.Password, user.Password) {
 		err = ecode.PasswordCheckFailed
 		return
 	}
@@ -124,8 +124,6 @@ func Registration(req req.Registration) (token string, err error) {
 		return
 	}
 
-	token := ""
-
 	token, err = GetToken(obj)
 	if err != nil {
 		return
@@ -135,9 +133,9 @@ func Registration(req req.Registration) (token string, err error) {
 }
 
 // 验证密码并生成token
-func CheckPwd(pwd string) bool {
+func CheckPwd(pwd, basePwd string) bool {
 	options := &password.Options{16, 100, 32, sha512.New}
-	pwdSlice := strings.Split(pwd, "$")
+	pwdSlice := strings.Split(basePwd, "$")
 	return password.Verify(pwd, pwdSlice[1], pwdSlice[2], options)
 }
 
