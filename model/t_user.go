@@ -24,7 +24,7 @@ const (
 
 // 保存用户
 func (t *User) Save(db *gorm.DB) (err error) {
-	err = db.Model(t).Save(t).Error
+	err = db.Save(t).Error
 	return
 }
 

@@ -52,6 +52,14 @@ func LoginByPwd(form req.LoginByPwd) (token string, err error) {
 
 // 验证码登录
 func LoginByCode(form req.LoginByCode) (token string, err error) {
+
+	//验证手机号
+	err = MsgVerify(form.Phone, form.Code)
+
+	if err != nil {
+		return
+	}
+
 	user := model.User{}
 
 	db := global.DB
@@ -59,21 +67,32 @@ func LoginByCode(form req.LoginByCode) (token string, err error) {
 
 	err, user = obj.GetUserByPhone(db, form.Phone)
 
-	if err != nil {
-		return
-	}
+	if err == nil {
+		//校验用户状态
+		if user.Status != model.UserStatusNormal {
+			err = ecode.UserNotFound
+			return
+		}
+	} else {
+		//有错误，错误是数据未找到，走注册逻辑
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			user = model.User{
+				Phone:    form.Phone,
+				OpenId:   "",
+				Name:     form.Phone,
+				Password: "",
+				Status:   model.UserStatusNormal,
+			}
 
-	//校验用户状态
-	if user.Status != model.UserStatusNormal {
-		err = ecode.UserNotFound
-		return
-	}
+			err = db.Create(&user).Error
 
-	//验证手机号
-	err = MsgVerify(form.Phone, form.Code)
-
-	if err != nil {
-		return
+			if err != nil {
+				return
+			}
+		} else {
+			//有错误且不是数据未找到，直接返回错误
+			return
+		}
 	}
 
 	//生成token
@@ -150,8 +169,7 @@ func GetToken(user *model.User) (token string, err error) {
 	hour := time.Duration(24)
 
 	claims := middlewares.CustomClaims{
-		ID:             user.Id,
-		Name:           user.Name,
+		Id:             user.Id,
 		StandardClaims: jwt.StandardClaims{ExpiresAt: time.Now().Add(hour * time.Hour).Unix()},
 	}
 

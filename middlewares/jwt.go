@@ -13,8 +13,7 @@ import (
 )
 
 type CustomClaims struct {
-	ID   int
-	Name string
+	Id int `json:"id"`
 	jwt.StandardClaims
 }
 
