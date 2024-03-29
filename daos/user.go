@@ -213,7 +213,7 @@ func MsgVerify(phone string, code int) (err error) {
 	}
 
 	if result.Status != 200 {
-		err = errors.New(result.Error)
+		return ecode.New(result.Status, result.Error)
 	}
 
 	return
