@@ -201,7 +201,6 @@ func MsgVerify(phone string, code int) (err error) {
 
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
-		fmt.Println(err)
 		return
 	}
 

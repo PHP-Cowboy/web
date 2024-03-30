@@ -12,6 +12,7 @@ type MedicalCases struct {
 	Prescription string `gorm:"type:varchar(255);not null;default:'';comment:方药"` //方药
 	Content      string `gorm:"type:varchar(255);not null;default:'';comment:内容"` //内容
 	Provenance   string `gorm:"type:varchar(32);not null;default:'';comment:出处"`  //出处
+	Picture      string `gorm:"type:varchar(255);not null;default:'';comment:图片"` //图片
 }
 
 func (t *MedicalCases) Save(db *gorm.DB) (err error) {

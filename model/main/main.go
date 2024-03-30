@@ -48,7 +48,12 @@ func main() {
 
 	//_ = db.Set(model.TableOptions, model.GetOptions("角色菜单权限表")).AutoMigrate(&model.RoleMenu{})
 
-	_ = db.Set(model.TableOptions, model.GetOptions("医疗案例")).AutoMigrate(&model.MedicalCases{})
-	_ = db.Set(model.TableOptions, model.GetOptions("用户表")).AutoMigrate(&model.User{})
+	//_ = db.Set(model.TableOptions, model.GetOptions("用户表")).AutoMigrate(&model.User{})
+
+	//_ = db.Set(model.TableOptions, model.GetOptions("医疗案例")).AutoMigrate(&model.MedicalCases{})
+
+	_ = db.Set(model.TableOptions, model.GetOptions("典籍分类")).AutoMigrate(&model.ClassicsCategory{})
+	_ = db.Set(model.TableOptions, model.GetOptions("典籍")).AutoMigrate(&model.Classics{})
+	_ = db.Set(model.TableOptions, model.GetOptions("典籍内容")).AutoMigrate(&model.ClassicsContent{})
 
 }
