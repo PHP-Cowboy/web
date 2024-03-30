@@ -24,3 +24,7 @@ type PrevNext struct {
 	Id         int `json:"id"`
 	ClassicsId int `json:"classics_id"`
 }
+
+type ToolList struct {
+	Paging
+}

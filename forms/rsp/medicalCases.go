@@ -48,3 +48,16 @@ type Catalogue struct {
 	Title      string `json:"title"`
 	Content    string `json:"content"`
 }
+
+type ToolRsp struct {
+	Total int64  `json:"total"`
+	List  []Tool `json:"list"`
+}
+
+type Tool struct {
+	Id      int    `json:"id"`
+	Name    string `json:"name"`
+	Desc    string `json:"desc"`
+	Picture string `json:"picture"`
+	Router  string `json:"router"`
+}
