@@ -42,6 +42,7 @@ func MedicalCasesList(form req.MedicalCasesList) (res rsp.MedicalCasesRsp, err e
 			Prescription: m.Prescription,
 			Content:      m.Content,
 			Provenance:   m.Provenance,
+			Picture:      m.Picture,
 		})
 	}
 

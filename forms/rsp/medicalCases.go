@@ -11,6 +11,7 @@ type MedicalCases struct {
 	Prescription string `json:"prescription"` //方药
 	Content      string `json:"content"`      //内容
 	Provenance   string `json:"provenance"`   //出处
+	Picture      string `json:"picture"`      //图片地址
 }
 
 type ClassicsCategoryRsp struct {
