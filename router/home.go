@@ -11,8 +11,8 @@ func HomeRoute(g *gin.RouterGroup) {
 	h := g.Group("/home", middlewares.JWTAuth())
 	bg := h.Group("/bigData")
 	{
-		bg.POST("/list", controller.BigDataList)          //列表
-		bg.POST("/detail", controller.MedicalCasesDetail) //详情
+		bg.POST("/pieChart", controller.BigDataPieChart) //大数据饼图
+		bg.POST("/list", controller.ClinicalList)        //列表
 	}
 	cs := h.Group("/classics")
 	{

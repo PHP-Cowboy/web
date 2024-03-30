@@ -28,3 +28,11 @@ type PrevNext struct {
 type ToolList struct {
 	Paging
 }
+
+type ClinicalList struct {
+	Paging
+}
+
+type BigDataPieChart struct {
+	CategoryId int `json:"category_id"`
+}

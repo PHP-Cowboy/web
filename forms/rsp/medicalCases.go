@@ -61,3 +61,28 @@ type Tool struct {
 	Picture string `json:"picture"`
 	Router  string `json:"router"`
 }
+
+type ClinicalRsp struct {
+	Total int64      `json:"total"`
+	List  []Clinical `json:"list"`
+}
+
+type Clinical struct {
+	Id      int    `json:"id"`
+	Symptom string `json:"symptom"`
+}
+
+type BigDataPieChartRsp struct {
+	Category Category  `json:"category"`
+	List     []BigData `json:"big_data"`
+}
+
+type Category struct {
+	Id   int    `json:"id"`
+	Name string `json:"name"`
+}
+
+type BigData struct {
+	Name string `json:"name"`
+	Num  int    `json:"num"`
+}
