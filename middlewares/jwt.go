@@ -64,6 +64,7 @@ func NewJwt() *Jwt {
 
 // 创建token
 func (j *Jwt) CreateToken(claims CustomClaims) (string, error) {
+	claims.ExpiresAt = time.Now().Add(1 * time.Hour).Unix()
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString(j.Key)
 }
