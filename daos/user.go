@@ -53,12 +53,12 @@ func LoginByPwd(form req.LoginByPwd) (token string, err error) {
 // 验证码登录
 func LoginByCode(form req.LoginByCode) (token string, err error) {
 
-	//验证手机号
-	err = MsgVerify(form.Phone, form.Code)
+	//验证手机号 todo 开放验证码
+	//err = MsgVerify(form.Phone, form.Code)
 
-	if err != nil {
-		return
-	}
+	//if err != nil {
+	//	return
+	//}
 
 	user := model.User{}
 
