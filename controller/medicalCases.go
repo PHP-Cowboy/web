@@ -25,6 +25,23 @@ func MedicalCasesList(c *gin.Context) {
 	xsq_net.SucJson(c, res)
 }
 
+// 随机获取医案列表
+func RandMedicalCasesList(c *gin.Context) {
+	var form req.MedicalCasesList
+
+	if err := c.ShouldBind(&form); err != nil {
+		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
+		return
+	}
+
+	res, err := daos.RandMedicalCasesList(form)
+	if err != nil {
+		return
+	}
+
+	xsq_net.SucJson(c, res)
+}
+
 // 医疗案例详情
 func MedicalCasesDetail(c *gin.Context) {
 	var form req.Id

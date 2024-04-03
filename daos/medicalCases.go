@@ -11,11 +11,8 @@ import (
 func MedicalCasesList(form req.MedicalCasesList) (res rsp.MedicalCasesRsp, err error) {
 	db := global.DB
 
-	obj := &model.MedicalCases{
-		Symptom:      form.KeyWords,
-		Prescription: form.KeyWords,
-		Provenance:   form.KeyWords,
-	}
+	obj := &model.MedicalCases{}
+
 	var (
 		medicalCasesList []model.MedicalCases
 		total            int64
@@ -47,6 +44,38 @@ func MedicalCasesList(form req.MedicalCasesList) (res rsp.MedicalCasesRsp, err e
 	}
 
 	res.Total = total
+	res.List = list
+
+	return
+}
+
+// 随机获取医案列表
+func RandMedicalCasesList(form req.MedicalCasesList) (res rsp.MedicalCasesRsp, err error) {
+	db := global.DB
+
+	obj := &model.MedicalCases{}
+
+	medicalCasesList := make([]model.MedicalCases, 0, form.Size)
+
+	medicalCasesList, err = obj.GetRandList(db, form)
+
+	if err != nil {
+		return
+	}
+
+	list := make([]rsp.MedicalCases, 0, form.Size)
+
+	for _, m := range medicalCasesList {
+		list = append(list, rsp.MedicalCases{
+			Id:           m.Id,
+			Symptom:      m.Symptom,
+			Prescription: m.Prescription,
+			Content:      m.Content,
+			Provenance:   m.Provenance,
+			Picture:      m.Picture,
+		})
+	}
+
 	res.List = list
 
 	return

@@ -69,3 +69,8 @@ func (t *MedicalCases) GetLikeCount(db *gorm.DB, form req.MedicalCasesList) (tot
 	err = localDb.Count(&total).Error
 	return
 }
+
+func (t *MedicalCases) GetRandList(db *gorm.DB, form req.MedicalCasesList) (list []MedicalCases, err error) {
+	err = db.Raw("select * from medical_cases order by RAND() limit ?", form.Size).Scan(&list).Error
+	return
+}
