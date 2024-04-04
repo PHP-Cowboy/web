@@ -12,7 +12,6 @@ import (
 	"strings"
 
 	"web/global"
-	"web/middlewares"
 )
 
 type HttpRsp struct {
@@ -51,11 +50,7 @@ func PostTest() {
 	fmt.Println(string(body))
 }
 
-func Post(path string, responseData interface{}) ([]byte, error) {
-
-	cfg := global.ServerConfig
-
-	url := fmt.Sprintf("%s:%d/%s", cfg.GoodsApi.Url, cfg.GoodsApi.Port, path)
+func Post(url string, responseData interface{}) ([]byte, error) {
 
 	client := &http.Client{}
 
@@ -73,10 +68,7 @@ func Post(path string, responseData interface{}) ([]byte, error) {
 		return nil, err
 	}
 
-	sign := middlewares.Generate()
-
 	rq.Header.Add("Content-Type", "application/json")
-	rq.Header.Add("x-sign", sign)
 
 	res, err := client.Do(rq)
 
@@ -96,10 +88,7 @@ func Post(path string, responseData interface{}) ([]byte, error) {
 	return body, nil
 }
 
-func Get(path string) ([]byte, error) {
-	cfg := global.ServerConfig
-
-	url := fmt.Sprintf("%s:%d/%s", cfg.GoodsApi.Url, cfg.GoodsApi.Port, path)
+func Get(url string) ([]byte, error) {
 
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)

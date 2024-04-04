@@ -140,3 +140,33 @@ func Check(c *gin.Context) {
 	//只需要中间件校验登录是否过期即可
 	xsq_net.Success(c)
 }
+
+// 建议
+func Suggestion(c *gin.Context) {
+	var form req.Suggestion
+
+	bindingBody := binding.Default(c.Request.Method, c.ContentType()).(binding.BindingBody)
+
+	if err := c.ShouldBindBodyWith(&form, bindingBody); err != nil {
+		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
+		return
+	}
+
+	uid, ok := c.Get("uid")
+
+	if !ok {
+		xsq_net.ErrorJSON(c, ecode.UserNotLogin)
+		return
+	}
+
+	form.Uid = uid.(int)
+
+	err := daos.Suggestion(form)
+
+	if err != nil {
+		xsq_net.ErrorJSON(c, err)
+		return
+	}
+
+	xsq_net.Success(c)
+}

@@ -10,7 +10,7 @@ import (
 type User struct {
 	Base
 	Phone    string `gorm:"type:varchar(16);unique;not null;comment:手机号"`
-	OpenId   string `gorm:"type:varchar(64);unique;not null;comment:微信openid"`
+	UnionId  string `gorm:"type:varchar(64);unique;not null;comment:微信union_id"`
 	Name     string `gorm:"type:varchar(16);not null;comment:姓名"`
 	Password string `gorm:"type:varchar(100);not null;comment:密码"`
 	Status   int    `gorm:"type:tinyint;not null;default:1;comment:状态:0:未知,1:正常,2:禁用"`
@@ -51,6 +51,16 @@ func (t *User) GetFirstByPk(db *gorm.DB, pk int) (err error, user User) {
 
 func (t *User) GetUserByPhone(db *gorm.DB, phone string) (err error, user User) {
 	err = db.Model(t).Where("phone = ?", phone).First(&user).Error
+
+	if err != nil {
+		return
+	}
+
+	return
+}
+
+func (t *User) GetUserByUnionId(db *gorm.DB, unionId string) (err error, user User) {
+	err = db.Model(t).Where("union_id = ?", unionId).First(&user).Error
 
 	if err != nil {
 		return

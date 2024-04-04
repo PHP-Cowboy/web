@@ -23,3 +23,19 @@ func ToolList(c *gin.Context) {
 
 	xsq_net.SucJson(c, res)
 }
+
+func MindMapList(c *gin.Context) {
+	form := req.MindMapList{}
+
+	if err := c.ShouldBind(&form); err != nil {
+		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
+		return
+	}
+
+	res, err := daos.MindMapList(form)
+	if err != nil {
+		return
+	}
+
+	xsq_net.SucJson(c, res)
+}

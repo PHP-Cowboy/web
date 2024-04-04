@@ -60,12 +60,33 @@ func LoginByCode(form req.LoginByCode) (token string, err error) {
 	//	return
 	//}
 
+	token, err = Login(req.LoginParams{
+		Type:  1,
+		Param: form.Phone,
+	})
+
+	return
+}
+
+func Login(p req.LoginParams) (token string, err error) {
 	user := model.User{}
 
 	db := global.DB
 	obj := new(model.User)
 
-	err, user = obj.GetUserByPhone(db, form.Phone)
+	var (
+		phone   string
+		unionId string
+	)
+
+	switch p.Type {
+	case 1: //手机号
+		err, user = obj.GetUserByPhone(db, p.Param)
+		phone = p.Param
+	case 2: //微信
+		err, user = obj.GetUserByUnionId(db, p.Param)
+		unionId = p.Param
+	}
 
 	if err == nil {
 		//校验用户状态
@@ -77,9 +98,9 @@ func LoginByCode(form req.LoginByCode) (token string, err error) {
 		//有错误，错误是数据未找到，走注册逻辑
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			user = model.User{
-				Phone:    form.Phone,
-				OpenId:   "",
-				Name:     form.Phone,
+				Phone:    phone,
+				UnionId:  unionId,
+				Name:     p.Param,
 				Password: "",
 				Status:   model.UserStatusNormal,
 			}
@@ -131,7 +152,7 @@ func Registration(req req.Registration) (token string, err error) {
 
 	obj = &model.User{
 		Phone:    req.Phone,
-		OpenId:   "",
+		UnionId:  "",
 		Name:     req.Phone,
 		Password: pwd,
 		Status:   model.UserStatusNormal,
@@ -215,5 +236,15 @@ func MsgVerify(phone string, code int) (err error) {
 		return ecode.New(result.Status, result.Error)
 	}
 
+	return
+}
+
+// 建议
+func Suggestion(form req.Suggestion) (err error) {
+	db := global.DB
+
+	obj := new(model.Suggestion)
+
+	err = obj.Save(db, form.Uid, form.Msg)
 	return
 }

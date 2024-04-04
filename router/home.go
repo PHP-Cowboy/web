@@ -27,4 +27,8 @@ func HomeRoute(g *gin.RouterGroup) {
 	{
 		t.POST("/list", controller.ToolList) //工具列表
 	}
+	m := h.Group("/mind")
+	{
+		m.POST("/list", controller.MindMapList)
+	}
 }

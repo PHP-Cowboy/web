@@ -63,6 +63,17 @@ type Tool struct {
 	Router  string `json:"router"`
 }
 
+type MindMapRsp struct {
+	Total int64     `json:"total"`
+	List  []MindMap `json:"list"`
+}
+
+type MindMap struct {
+	Id      int    `json:"id"`
+	Title   string `json:"title"`
+	Picture string `json:"picture"`
+}
+
 type ClinicalRsp struct {
 	Total int64      `json:"total"`
 	List  []Clinical `json:"list"`

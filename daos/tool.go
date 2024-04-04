@@ -40,3 +40,36 @@ func ToolList(form req.ToolList) (res rsp.ToolRsp, err error) {
 
 	return
 }
+
+// 思维导图列表
+func MindMapList(form req.MindMapList) (res rsp.MindMapRsp, err error) {
+	db := global.DB
+
+	obj := model.MindMap{}
+
+	var (
+		total    int64
+		mindList []model.MindMap
+	)
+
+	total, mindList, err = obj.GetPageList(db, form)
+
+	if err != nil {
+		return
+	}
+
+	list := make([]rsp.MindMap, 0, len(mindList))
+
+	for _, cl := range mindList {
+		list = append(list, rsp.MindMap{
+			Id:      cl.Id,
+			Title:   cl.Title,
+			Picture: cl.Picture,
+		})
+	}
+
+	res.List = list
+	res.Total = total
+
+	return
+}

@@ -60,10 +60,12 @@ func main() {
 
 	//_ = db.Set(model.TableOptions, model.GetOptions("工具")).AutoMigrate(&model.Tool{})
 
-	_ = db.Set(model.TableOptions, model.GetOptions("大数据")).AutoMigrate(&model.BigData{})
+	//_ = db.Set(model.TableOptions, model.GetOptions("大数据")).AutoMigrate(&model.BigData{})
+	//
+	//_ = db.Set(model.TableOptions, model.GetOptions("大数据分类")).AutoMigrate(&model.BigDataCategory{})
 
-	_ = db.Set(model.TableOptions, model.GetOptions("大数据分类")).AutoMigrate(&model.BigDataCategory{})
+	//_ = db.Set(model.TableOptions, model.GetOptions("临床")).AutoMigrate(&model.Clinical{})
 
-	_ = db.Set(model.TableOptions, model.GetOptions("临床")).AutoMigrate(&model.Clinical{})
+	_ = db.Set(model.TableOptions, model.GetOptions("建议")).AutoMigrate(&model.Suggestion{})
 
 }

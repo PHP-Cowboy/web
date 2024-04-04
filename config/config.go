@@ -5,6 +5,7 @@ type ServerConfig struct {
 	MysqlInfo MysqlConfig `mapstructure:"mysql" json:"mysql"`
 	JwtInfo   JWTConfig   `mapstructure:"jwt" json:"jwt"`
 	Sms       Sms         `mapstructure:"sms" json:"sms"`
+	ThirdApp  ThirdApp    `mapstructure:"thirdApp" json:"thirdApp"`
 }
 
 type MysqlConfig struct {
@@ -21,5 +22,10 @@ type JWTConfig struct {
 
 type Sms struct {
 	AppKey string `mapstructure:"appKey" json:"appKey"`
+	Secret string `mapstructure:"secret" json:"secret"`
+}
+
+type ThirdApp struct {
+	AppId  string `mapstructure:"appId" json:"appId"`
 	Secret string `mapstructure:"secret" json:"secret"`
 }

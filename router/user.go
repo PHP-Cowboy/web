@@ -21,6 +21,8 @@ func UserRoute(g *gin.RouterGroup) {
 		loginGroup.GET("/check", controller.Check)
 		//修改密码
 		loginGroup.POST("/change", controller.ChangeUser)
+		//建议
+		loginGroup.POST("/suggestion", controller.Suggestion)
 	}
 
 }

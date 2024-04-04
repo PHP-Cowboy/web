@@ -24,6 +24,11 @@ type LoginByCode struct {
 	Code  int    `json:"code" binding:"required"`
 }
 
+type LoginParams struct {
+	Type  int    `json:"type"`
+	Param string `json:"param"`
+}
+
 type Registration struct {
 	Phone    string `json:"phone" binding:"required"`
 	Code     int    `json:"code" binding:"required"`
@@ -50,4 +55,9 @@ type GetPickerListReq struct {
 
 type GetUserForm struct {
 	Id int `json:"id" form:"id" binding:"required"`
+}
+
+type Suggestion struct {
+	Uid int
+	Msg string `json:"msg" binding:"required"`
 }

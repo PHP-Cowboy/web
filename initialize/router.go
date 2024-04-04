@@ -19,6 +19,8 @@ func InitRouter() *gin.Engine {
 	router.HomeRoute(group)
 	//用户
 	router.UserRoute(group)
+	//三方接口
+	router.ThirdRoute(group)
 
 	return r
 }
