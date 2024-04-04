@@ -29,6 +29,11 @@ func HomeRoute(g *gin.RouterGroup) {
 	}
 	m := h.Group("/mind")
 	{
-		m.POST("/list", controller.MindMapList)
+		m.POST("/list", controller.MindMapList) //思维导图列表
+	}
+	d := h.Group("/disease")
+	{
+		d.POST("/category", controller.DiseaseCategory) //疾病分类
+		d.POST("/disease", controller.DiseaseList)      //疾病分类数据
 	}
 }

@@ -74,6 +74,17 @@ type MindMap struct {
 	Picture string `json:"picture"`
 }
 
+type DiseaseRsp struct {
+	Total int64     `json:"total"`
+	List  []Disease `json:"list"`
+}
+
+type Disease struct {
+	Id      int    `json:"id"`
+	Title   string `json:"title"`
+	Content string `json:"content"`
+}
+
 type ClinicalRsp struct {
 	Total int64      `json:"total"`
 	List  []Clinical `json:"list"`
@@ -97,4 +108,11 @@ type Category struct {
 type BigData struct {
 	Name string `json:"name"`
 	Num  int    `json:"num"`
+}
+
+type Group struct {
+	Id       int     `json:"id"`
+	ParentId int     `json:"parent_id"`
+	Name     string  `json:"name"`
+	Children []Group `json:"children"`
 }

@@ -16,6 +16,14 @@ func (t *MindMap) TableName() string {
 }
 
 func (t *MindMap) GetPageList(db *gorm.DB, form req.MindMapList) (total int64, list []MindMap, err error) {
-	err = db.Model(t).Where("title like %?%", form.KeyWords).Scopes(Paginate(form.Page, form.Size)).Find(&list).Error
+	localDb := db.Model(t).Where("title like ?", "%"+form.KeyWords+"%")
+
+	err = localDb.Count(&total).Error
+
+	if err != nil {
+		return
+	}
+
+	err = localDb.Scopes(Paginate(form.Page, form.Size)).Find(&list).Error
 	return
 }

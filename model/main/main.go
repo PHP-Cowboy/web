@@ -66,6 +66,11 @@ func main() {
 
 	//_ = db.Set(model.TableOptions, model.GetOptions("临床")).AutoMigrate(&model.Clinical{})
 
-	_ = db.Set(model.TableOptions, model.GetOptions("建议")).AutoMigrate(&model.Suggestion{})
+	//_ = db.Set(model.TableOptions, model.GetOptions("建议")).AutoMigrate(&model.Suggestion{})
+
+	//_ = db.Set(model.TableOptions, model.GetOptions("思维导图")).AutoMigrate(&model.MindMap{})
+
+	_ = db.Set(model.TableOptions, model.GetOptions("疾病分类")).AutoMigrate(&model.DiseaseCategory{})
+	_ = db.Set(model.TableOptions, model.GetOptions("疾病")).AutoMigrate(&model.Disease{})
 
 }
