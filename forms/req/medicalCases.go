@@ -45,3 +45,19 @@ type MindMapList struct {
 type DiseaseList struct {
 	CategoryId int `json:"category_id" binding:"required"`
 }
+
+type MindMethodList struct {
+	Paging
+	KeyWords string `json:"key_words"`
+}
+
+type PrescriptionCategoryList struct {
+	Paging
+	KeyWords string `json:"key_words"`
+}
+
+type PrescriptionList struct {
+	Paging
+	KeyWords   string `json:"key_words"`
+	CategoryId int    `json:"category_id"`
+}

@@ -70,7 +70,14 @@ func main() {
 
 	//_ = db.Set(model.TableOptions, model.GetOptions("思维导图")).AutoMigrate(&model.MindMap{})
 
-	_ = db.Set(model.TableOptions, model.GetOptions("疾病分类")).AutoMigrate(&model.DiseaseCategory{})
-	_ = db.Set(model.TableOptions, model.GetOptions("疾病")).AutoMigrate(&model.Disease{})
+	//_ = db.Set(model.TableOptions, model.GetOptions("疾病分类")).AutoMigrate(&model.DiseaseCategory{})
+
+	//_ = db.Set(model.TableOptions, model.GetOptions("疾病")).AutoMigrate(&model.Disease{})
+
+	//_ = db.Set(model.TableOptions, model.GetOptions("名医心法")).AutoMigrate(&model.MindMethod{})
+
+	_ = db.Set(model.TableOptions, model.GetOptions("中医方剂")).AutoMigrate(&model.Prescription{})
+
+	_ = db.Set(model.TableOptions, model.GetOptions("中医方剂分类")).AutoMigrate(&model.PrescriptionCategory{})
 
 }

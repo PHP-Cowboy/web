@@ -153,3 +153,148 @@ func Disease(form req.DiseaseList) (res rsp.DiseaseRsp, err error) {
 
 	return
 }
+
+// 名医心法
+func MindMethodList(form req.MindMethodList) (res rsp.MindMethodRsp, err error) {
+	db := global.DB
+
+	obj := model.MindMethod{}
+
+	var (
+		total          int64
+		mindMethodList []model.MindMethod
+	)
+
+	total, mindMethodList, err = obj.GetPageList(db, form)
+
+	if err != nil {
+		return
+	}
+
+	list := make([]rsp.MindMethod, 0, len(mindMethodList))
+
+	for _, cl := range mindMethodList {
+		list = append(list, rsp.MindMethod{
+			Id:     cl.Id,
+			Title:  cl.Title,
+			Doctor: cl.Doctor,
+		})
+	}
+
+	res.List = list
+	res.Total = total
+
+	return
+}
+
+// 名医心法详情
+func MindMethod(form req.Id) (res rsp.MindMethod, err error) {
+	db := global.DB
+
+	obj := model.MindMethod{}
+
+	var mindMethod model.MindMethod
+
+	mindMethod, err = obj.GetFirst(db, form)
+
+	if err != nil {
+		return
+	}
+
+	res.Id = mindMethod.Id
+	res.Title = mindMethod.Title
+	res.Doctor = mindMethod.Doctor
+	res.Content = mindMethod.Content
+
+	return
+}
+
+// 中医方剂分类列表
+func PrescriptionCategoryList(form req.PrescriptionCategoryList) (res rsp.PrescriptionCategoryRsp, err error) {
+	db := global.DB
+
+	obj := model.PrescriptionCategory{}
+
+	var (
+		total          int64
+		mindMethodList []model.PrescriptionCategory
+	)
+
+	total, mindMethodList, err = obj.GetPageList(db, form)
+
+	if err != nil {
+		return
+	}
+
+	list := make([]rsp.PrescriptionCategory, 0, len(mindMethodList))
+
+	for _, cl := range mindMethodList {
+		list = append(list, rsp.PrescriptionCategory{
+			Id:   cl.Id,
+			Name: cl.Name,
+		})
+	}
+
+	res.List = list
+	res.Total = total
+
+	return
+}
+
+// 中医方剂列表
+func PrescriptionList(form req.PrescriptionList) (res rsp.PrescriptionRsp, err error) {
+	db := global.DB
+
+	obj := model.Prescription{}
+
+	var (
+		total          int64
+		mindMethodList []model.Prescription
+	)
+
+	total, mindMethodList, err = obj.GetPageList(db, form)
+
+	if err != nil {
+		return
+	}
+
+	list := make([]rsp.Prescription, 0, len(mindMethodList))
+
+	for _, cl := range mindMethodList {
+		list = append(list, rsp.Prescription{
+			Id:         cl.Id,
+			Title:      cl.Title,
+			Content:    cl.Content,
+			Provenance: cl.Provenance,
+			CategoryId: cl.CategoryId,
+		})
+	}
+
+	res.List = list
+	res.Total = total
+
+	return
+}
+
+// 中医方剂详情
+func Prescription(form req.Id) (res rsp.Prescription, err error) {
+	db := global.DB
+
+	obj := model.Prescription{}
+
+	var mindMethod model.Prescription
+
+	mindMethod, err = obj.GetFirst(db, form)
+
+	if err != nil {
+		return
+	}
+
+	res.Id = mindMethod.Id
+	res.Title = mindMethod.Title
+	res.Content = mindMethod.Content
+	res.Provenance = mindMethod.Provenance
+	res.CategoryId = mindMethod.CategoryId
+
+	return
+}

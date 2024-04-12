@@ -72,3 +72,93 @@ func DiseaseList(c *gin.Context) {
 
 	xsq_net.SucJson(c, res)
 }
+
+// 名医心法
+func MindMethodList(c *gin.Context) {
+	form := req.MindMethodList{}
+
+	if err := c.ShouldBind(&form); err != nil {
+		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
+		return
+	}
+
+	res, err := daos.MindMethodList(form)
+	if err != nil {
+		xsq_net.ErrorJSON(c, err)
+		return
+	}
+
+	xsq_net.SucJson(c, res)
+}
+
+// 名医心法详情
+func MindMethod(c *gin.Context) {
+	form := req.Id{}
+
+	if err := c.ShouldBind(&form); err != nil {
+		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
+		return
+	}
+
+	res, err := daos.MindMethod(form)
+	if err != nil {
+		xsq_net.ErrorJSON(c, err)
+		return
+	}
+
+	xsq_net.SucJson(c, res)
+}
+
+// 中医方剂分类列表
+func PrescriptionCategoryList(c *gin.Context) {
+	form := req.PrescriptionCategoryList{}
+
+	if err := c.ShouldBind(&form); err != nil {
+		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
+		return
+	}
+
+	res, err := daos.PrescriptionCategoryList(form)
+	if err != nil {
+		xsq_net.ErrorJSON(c, err)
+		return
+	}
+
+	xsq_net.SucJson(c, res)
+}
+
+// 中医方剂列表
+func PrescriptionList(c *gin.Context) {
+	form := req.PrescriptionList{}
+
+	if err := c.ShouldBind(&form); err != nil {
+		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
+		return
+	}
+
+	res, err := daos.PrescriptionList(form)
+	if err != nil {
+		xsq_net.ErrorJSON(c, err)
+		return
+	}
+
+	xsq_net.SucJson(c, res)
+}
+
+// 中医方剂详情
+func Prescription(c *gin.Context) {
+	form := req.Id{}
+
+	if err := c.ShouldBind(&form); err != nil {
+		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
+		return
+	}
+
+	res, err := daos.Prescription(form)
+	if err != nil {
+		xsq_net.ErrorJSON(c, err)
+		return
+	}
+
+	xsq_net.SucJson(c, res)
+}

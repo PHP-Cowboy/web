@@ -85,6 +85,41 @@ type Disease struct {
 	Content string `json:"content"`
 }
 
+type MindMethodRsp struct {
+	Total int64        `json:"total"`
+	List  []MindMethod `json:"list"`
+}
+
+type MindMethod struct {
+	Id      int    `json:"id"`
+	Title   string `json:"title"`
+	Doctor  string `json:"doctor"`
+	Content string `json:"content"`
+}
+
+type PrescriptionCategoryRsp struct {
+	Total int64                  `json:"total"`
+	List  []PrescriptionCategory `json:"list"`
+}
+
+type PrescriptionCategory struct {
+	Id   int    `json:"id"`
+	Name string `json:"name"`
+}
+
+type PrescriptionRsp struct {
+	Total int64          `json:"total"`
+	List  []Prescription `json:"list"`
+}
+
+type Prescription struct {
+	Id         int    `json:"id"`
+	Title      string `json:"title"`
+	Content    string `json:"content"`
+	Provenance string `json:"provenance"`
+	CategoryId int    `json:"category_id"`
+}
+
 type ClinicalRsp struct {
 	Total int64      `json:"total"`
 	List  []Clinical `json:"list"`

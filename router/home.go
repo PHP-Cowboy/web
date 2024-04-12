@@ -36,4 +36,16 @@ func HomeRoute(g *gin.RouterGroup) {
 		d.POST("/category", controller.DiseaseCategory) //疾病分类
 		d.POST("/disease", controller.DiseaseList)      //疾病分类数据
 	}
+	mm := h.Group("/mindMethod")
+	{
+		mm.POST("/list", controller.MindMethodList) //名医心法
+		mm.POST("/info", controller.MindMethod)     //名医心法详情
+	}
+
+	p := h.Group("prescription")
+	{
+		p.POST("/categoryList", controller.PrescriptionCategoryList) //中医方剂分类列表
+		p.POST("/list", controller.PrescriptionList)                 //中医方剂列表
+		p.POST("/info", controller.Prescription)                     //名医心法详情
+	}
 }
