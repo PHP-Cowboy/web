@@ -2,6 +2,7 @@ package model
 
 import "gorm.io/gorm"
 
+// 疾病
 type Disease struct {
 	Base
 	CategoryId int    `gorm:"type:int(11);not null;default:0;comment:分类id"`
