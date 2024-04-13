@@ -59,7 +59,9 @@ func main() {
 	//_ = db.Set(model.TableOptions, model.GetOptions("名医心法")).AutoMigrate(&model.MindMethod{})
 	//_ = db.Set(model.TableOptions, model.GetOptions("常用方剂")).AutoMigrate(&model.CommonlyPrescription{})
 	//_ = db.Set(model.TableOptions, model.GetOptions("常用方剂分类")).AutoMigrate(&model.CommonlyPrescriptionCategory{})
-
-	_ = db.Set(model.TableOptions, model.GetOptions("方剂大全")).AutoMigrate(&model.CompleteCollectionPrescription{})
+	//_ = db.Set(model.TableOptions, model.GetOptions("方剂大全")).AutoMigrate(&model.CompleteCollectionPrescription{})
+	//_ = db.Set(model.TableOptions, model.GetOptions("大数据方剂")).AutoMigrate(&model.Prescription{})
+	//_ = db.Set(model.TableOptions, model.GetOptions("大数据方剂名家")).AutoMigrate(&model.Celebrity{})
+	_ = db.Set(model.TableOptions, model.GetOptions("大数据方剂图表")).AutoMigrate(&model.PrescriptionGraph{})
 
 }

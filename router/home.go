@@ -20,9 +20,13 @@ func HomeRoute(g *gin.RouterGroup) {
 	//方剂
 	p := h.Group("/prescription")
 	{
-		p.POST("/randOne", controller.RandOne)          //随机获取一条
-		p.POST("/pieChart", controller.BigDataPieChart) //大数据饼图
-		p.POST("/list", controller.ClinicalList)        //列表
+		p.POST("/randList", controller.PrescriptionRandList)                                           //大数据随机获取列表
+		p.POST("/list", controller.PrescriptionList)                                                   //大数据方剂列表
+		p.POST("/info", controller.PrescriptionInfo)                                                   //大数据方剂详情
+		p.POST("/celebrityList", controller.PrescriptionCelebrityList)                                 //大数据方剂名家列表
+		p.POST("/celebrityInfo", controller.PrescriptionCelebrityInfo)                                 //大数据方剂名家详情
+		p.POST("/celebrityInfoByPrescriptionId", controller.PrescriptionCelebrityInfoByPrescriptionId) //根据方剂id获取名家详情
+		p.POST("/graph", controller.PrescriptionGraph)                                                 //大数据方剂名家列表
 	}
 	cs := h.Group("/classics")
 	{

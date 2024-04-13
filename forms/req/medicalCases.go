@@ -29,14 +29,6 @@ type ToolList struct {
 	Paging
 }
 
-type ClinicalList struct {
-	Paging
-}
-
-type BigDataPieChart struct {
-	CategoryId int `json:"category_id"`
-}
-
 type MindMapList struct {
 	Paging
 	KeyWords string `json:"key_words"`
