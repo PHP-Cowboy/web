@@ -9,7 +9,8 @@
   },
   "jwtInfo": {
 	"key": "OnJRISd2iEr3pwEyGtSuZn6IoFAKyL2QQDyhZ&xDyi",
-	"expiresHour": 24
+	"expiresHour": 24,
+	"addHour": 2
   },
   "sms": {
 	"appKey": "3934387ba6b2c",

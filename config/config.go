@@ -1,5 +1,7 @@
 package config
 
+import "time"
+
 type ServerConfig struct {
 	Port      int         `json:"port"`
 	MysqlInfo MysqlConfig `json:"mysqlInfo"`
@@ -17,8 +19,9 @@ type MysqlConfig struct {
 }
 
 type JWTConfig struct {
-	SigningKey  string `json:"key"`
-	ExpiresHour string `json:"expiresHour"`
+	SigningKey  string        `json:"key"`
+	ExpiresHour time.Duration `json:"expiresHour"`
+	AddHour     time.Duration `json:"addHour"`
 }
 
 type Sms struct {
