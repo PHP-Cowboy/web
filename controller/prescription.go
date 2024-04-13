@@ -45,3 +45,22 @@ func BigDataPieChart(c *gin.Context) {
 
 	xsq_net.SucJson(c, res)
 }
+
+// 大数据饼图
+func RandOne(c *gin.Context) {
+	form := req.BigDataPieChart{}
+
+	if err := c.ShouldBind(&form); err != nil {
+		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
+		return
+	}
+
+	res, err := daos.BigDataPieChart(form)
+
+	if err != nil {
+		xsq_net.ErrorJSON(c, err)
+		return
+	}
+
+	xsq_net.SucJson(c, res)
+}

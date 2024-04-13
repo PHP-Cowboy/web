@@ -13,14 +13,10 @@ func InitRouter() *gin.Engine {
 	group := r.Group("/v1")
 	//base
 	router.BaseRoute(group)
-	//医案
-	router.MedicalCasesRoute(group)
 	//首页
 	router.HomeRoute(group)
 	//用户
 	router.UserRoute(group)
-	//三方接口
-	router.ThirdRoute(group)
 
 	return r
 }

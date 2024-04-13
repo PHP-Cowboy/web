@@ -5,7 +5,7 @@ import (
 	"web/forms/req"
 )
 
-// 中医方剂分类
+// 常用方剂分类
 type CommonlyPrescriptionCategory struct {
 	Base
 	Name    string `gorm:"type:varchar(32);not null;comment:分类名称"`

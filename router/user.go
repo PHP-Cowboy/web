@@ -13,6 +13,7 @@ func UserRoute(g *gin.RouterGroup) {
 		group.POST("/loginByPwd", controller.LoginByPwd)
 		group.POST("/loginByCode", controller.LoginByCode)
 		group.POST("/registration", controller.Registration)
+		group.POST("/wxLogin", controller.WxLogin)
 	}
 
 	loginGroup := g.Group("/user", middlewares.JWTAuth())

@@ -5,7 +5,7 @@ import (
 	"web/forms/req"
 )
 
-// 常用方剂
+// 方剂大全
 type CompleteCollectionPrescription struct {
 	Base
 	Title      string `gorm:"type:varchar(32);not null;comment:方剂标题"`
@@ -24,11 +24,7 @@ func (t *CompleteCollectionPrescription) GetPageList(db *gorm.DB, form req.Compl
 	if form.KeyWords != "" {
 		local.Where("title like ?", "%"+form.KeyWords+"%").
 			Or("provenance like ?", "%"+form.KeyWords+"%").
-			Or("constituent like ?", "%"+form.KeyWords+"%").
-			Or("`usage` like ?", "%"+form.KeyWords+"%").
-			Or("efficacy like ?", "%"+form.KeyWords+"%").
-			Or("mainly like ?", "%"+form.KeyWords+"%").
-			Or("song like ?", "%"+form.KeyWords+"%")
+			Or("content like ?", "%"+form.KeyWords+"%")
 	}
 
 	err = local.Count(&total).Error

@@ -16,6 +16,27 @@ import (
 	"web/utils/xsq_net"
 )
 
+// 微信登录
+func WxLogin(c *gin.Context) {
+	var form req.Wx
+
+	bindingBody := binding.Default(c.Request.Method, c.ContentType()).(binding.BindingBody)
+
+	if err := c.ShouldBindBodyWith(&form, bindingBody); err != nil {
+		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
+		return
+	}
+
+	token, err := daos.Wx(form)
+
+	if err != nil {
+		xsq_net.ErrorJSON(c, err)
+		return
+	}
+
+	xsq_net.SucJson(c, token)
+}
+
 // 登录
 func LoginByPwd(c *gin.Context) {
 	var form req.LoginByPwd

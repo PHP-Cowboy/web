@@ -8,11 +8,21 @@ import (
 
 func HomeRoute(g *gin.RouterGroup) {
 	//医疗案例
-	h := g.Group("/home", middlewares.JWTAuth())
-	bg := h.Group("/bigData")
+	mg := g.Group("/medicalCases", middlewares.JWTAuth())
 	{
-		bg.POST("/pieChart", controller.BigDataPieChart) //大数据饼图
-		bg.POST("/list", controller.ClinicalList)        //列表
+		mg.POST("/list", controller.MedicalCasesList)         //列表
+		mg.POST("/randList", controller.RandMedicalCasesList) //列表
+		mg.POST("/detail", controller.MedicalCasesDetail)     //详情
+	}
+	//首页
+	h := g.Group("/home", middlewares.JWTAuth())
+
+	//方剂
+	p := h.Group("/prescription")
+	{
+		p.POST("/randOne", controller.RandOne)          //随机获取一条
+		p.POST("/pieChart", controller.BigDataPieChart) //大数据饼图
+		p.POST("/list", controller.ClinicalList)        //列表
 	}
 	cs := h.Group("/classics")
 	{

@@ -307,7 +307,7 @@ func CommonlyPrescription(form req.Id) (res rsp.CommonlyPrescription, err error)
 	return
 }
 
-// 常用方剂列表
+// 方剂大全列表
 func CompleteCollectionPrescriptionList(form req.CompleteCollectionPrescriptionList) (res rsp.CompleteCollectionPrescriptionRsp, err error) {
 
 	db := global.DB
@@ -332,7 +332,6 @@ func CompleteCollectionPrescriptionList(form req.CompleteCollectionPrescriptionL
 			Id:         cl.Id,
 			Title:      cl.Title,
 			Provenance: cl.Provenance,
-			Content:    cl.Content,
 		})
 	}
 
@@ -342,7 +341,7 @@ func CompleteCollectionPrescriptionList(form req.CompleteCollectionPrescriptionL
 	return
 }
 
-// 中医方剂详情
+// 方剂大全详情
 func CompleteCollectionPrescription(form req.Id) (res rsp.CompleteCollectionPrescription, err error) {
 	db := global.DB
 
