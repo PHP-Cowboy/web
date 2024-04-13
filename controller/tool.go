@@ -73,7 +73,7 @@ func DiseaseList(c *gin.Context) {
 	xsq_net.SucJson(c, res)
 }
 
-// 名医心法
+// 名医心法列表
 func MindMethodList(c *gin.Context) {
 	form := req.MindMethodList{}
 
@@ -110,15 +110,15 @@ func MindMethod(c *gin.Context) {
 }
 
 // 中医方剂分类列表
-func PrescriptionCategoryList(c *gin.Context) {
-	form := req.PrescriptionCategoryList{}
+func CommonlyPrescriptionCategoryList(c *gin.Context) {
+	form := req.CommonlyPrescriptionCategoryList{}
 
 	if err := c.ShouldBind(&form); err != nil {
 		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
 		return
 	}
 
-	res, err := daos.PrescriptionCategoryList(form)
+	res, err := daos.CommonlyPrescriptionCategoryList(form)
 	if err != nil {
 		xsq_net.ErrorJSON(c, err)
 		return
@@ -127,16 +127,16 @@ func PrescriptionCategoryList(c *gin.Context) {
 	xsq_net.SucJson(c, res)
 }
 
-// 中医方剂列表
-func PrescriptionList(c *gin.Context) {
-	form := req.PrescriptionList{}
+// 常用方剂列表
+func CommonlyPrescriptionList(c *gin.Context) {
+	form := req.CommonlyPrescriptionList{}
 
 	if err := c.ShouldBind(&form); err != nil {
 		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
 		return
 	}
 
-	res, err := daos.PrescriptionList(form)
+	res, err := daos.CommonlyPrescriptionList(form)
 	if err != nil {
 		xsq_net.ErrorJSON(c, err)
 		return
@@ -145,8 +145,8 @@ func PrescriptionList(c *gin.Context) {
 	xsq_net.SucJson(c, res)
 }
 
-// 中医方剂详情
-func Prescription(c *gin.Context) {
+// 常用方剂详情
+func CommonlyPrescription(c *gin.Context) {
 	form := req.Id{}
 
 	if err := c.ShouldBind(&form); err != nil {
@@ -154,7 +154,43 @@ func Prescription(c *gin.Context) {
 		return
 	}
 
-	res, err := daos.Prescription(form)
+	res, err := daos.CommonlyPrescription(form)
+	if err != nil {
+		xsq_net.ErrorJSON(c, err)
+		return
+	}
+
+	xsq_net.SucJson(c, res)
+}
+
+// 方剂大全列表
+func CompleteCollectionPrescriptionList(c *gin.Context) {
+	form := req.CompleteCollectionPrescriptionList{}
+
+	if err := c.ShouldBind(&form); err != nil {
+		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
+		return
+	}
+
+	res, err := daos.CompleteCollectionPrescriptionList(form)
+	if err != nil {
+		xsq_net.ErrorJSON(c, err)
+		return
+	}
+
+	xsq_net.SucJson(c, res)
+}
+
+// 方剂大全详情
+func CompleteCollectionPrescription(c *gin.Context) {
+	form := req.Id{}
+
+	if err := c.ShouldBind(&form); err != nil {
+		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
+		return
+	}
+
+	res, err := daos.CompleteCollectionPrescription(form)
 	if err != nil {
 		xsq_net.ErrorJSON(c, err)
 		return

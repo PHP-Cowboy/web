@@ -76,8 +76,8 @@ func main() {
 
 	//_ = db.Set(model.TableOptions, model.GetOptions("名医心法")).AutoMigrate(&model.MindMethod{})
 
-	_ = db.Set(model.TableOptions, model.GetOptions("中医方剂")).AutoMigrate(&model.Prescription{})
+	_ = db.Set(model.TableOptions, model.GetOptions("常用方剂")).AutoMigrate(&model.CommonlyPrescription{})
 
-	_ = db.Set(model.TableOptions, model.GetOptions("中医方剂分类")).AutoMigrate(&model.PrescriptionCategory{})
+	_ = db.Set(model.TableOptions, model.GetOptions("常用方剂分类")).AutoMigrate(&model.CommonlyPrescriptionCategory{})
 
 }

@@ -16,19 +16,19 @@ func ClassicsCategoryList(form req.ClassicsCategoryList) (res rsp.ClassicsCatego
 	obj := model.ClassicsCategory{}
 
 	var (
-		total        int64
-		categoryList []model.ClassicsCategory
+		total    int64
+		dataList []model.ClassicsCategory
 	)
 
-	total, categoryList, err = obj.GetPageList(db, form)
+	total, dataList, err = obj.GetPageList(db, form)
 
 	if err != nil {
 		return
 	}
 
-	list := make([]rsp.ClassicsCategory, 0, len(categoryList))
+	list := make([]rsp.ClassicsCategory, 0, len(dataList))
 
-	for _, cl := range categoryList {
+	for _, cl := range dataList {
 		list = append(list, rsp.ClassicsCategory{
 			Id:      cl.Id,
 			Name:    cl.Name,
@@ -49,19 +49,19 @@ func BookListByCategory(form req.BookListByCategory) (res rsp.BookListRsp, err e
 	obj := model.Classics{}
 
 	var (
-		total        int64
-		classicsList []model.Classics
+		total    int64
+		dataList []model.Classics
 	)
 
-	total, classicsList, err = obj.GetPageList(db, form)
+	total, dataList, err = obj.GetPageList(db, form)
 
 	if err != nil {
 		return
 	}
 
-	list := make([]rsp.BookList, 0, len(classicsList))
+	list := make([]rsp.BookList, 0, len(dataList))
 
-	for _, cl := range classicsList {
+	for _, cl := range dataList {
 		list = append(list, rsp.BookList{
 			Id:         cl.Id,
 			CategoryId: cl.CategoryId,
@@ -84,19 +84,19 @@ func CatalogueList(form req.CatalogueList) (res rsp.CatalogueRsp, err error) {
 	obj := model.ClassicsContent{}
 
 	var (
-		total       int64
-		contentList []model.ClassicsContent
+		total    int64
+		dataList []model.ClassicsContent
 	)
 
-	total, contentList, err = obj.GetPageList(db, form)
+	total, dataList, err = obj.GetPageList(db, form)
 
 	if err != nil {
 		return
 	}
 
-	list := make([]rsp.Catalogue, 0, len(contentList))
+	list := make([]rsp.Catalogue, 0, len(dataList))
 
-	for _, cl := range contentList {
+	for _, cl := range dataList {
 		list = append(list, rsp.Catalogue{
 			Id:         cl.ClassicsId,
 			ClassicsId: cl.ClassicsId,
@@ -117,19 +117,19 @@ func BookContent(form req.Id) (res rsp.Catalogue, err error) {
 	obj := model.ClassicsContent{}
 
 	var (
-		content model.ClassicsContent
+		data model.ClassicsContent
 	)
 
-	content, err = obj.GetOneById(db, form.Id)
+	data, err = obj.GetOneById(db, form.Id)
 
 	if err != nil {
 		return
 	}
 
-	res.Id = content.Id
-	res.ClassicsId = content.ClassicsId
-	res.Title = content.Title
-	res.Content = content.Content
+	res.Id = data.Id
+	res.ClassicsId = data.ClassicsId
+	res.Title = data.Title
+	res.Content = data.Content
 
 	return
 }
@@ -141,10 +141,10 @@ func PrevBookContent(form req.PrevNext) (res rsp.Catalogue, err error) {
 	obj := model.ClassicsContent{}
 
 	var (
-		content model.ClassicsContent
+		data model.ClassicsContent
 	)
 
-	content, err = obj.GetPrevByIdClassicsId(db, form.Id, form.ClassicsId)
+	data, err = obj.GetPrevByIdClassicsId(db, form.Id, form.ClassicsId)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -154,10 +154,10 @@ func PrevBookContent(form req.PrevNext) (res rsp.Catalogue, err error) {
 		return
 	}
 
-	res.Id = content.Id
-	res.ClassicsId = content.ClassicsId
-	res.Title = content.Title
-	res.Content = content.Content
+	res.Id = data.Id
+	res.ClassicsId = data.ClassicsId
+	res.Title = data.Title
+	res.Content = data.Content
 
 	return
 }
@@ -169,10 +169,10 @@ func NextBookContent(form req.PrevNext) (res rsp.Catalogue, err error) {
 	obj := model.ClassicsContent{}
 
 	var (
-		content model.ClassicsContent
+		data model.ClassicsContent
 	)
 
-	content, err = obj.GetNextByIdClassicsId(db, form.Id, form.ClassicsId)
+	data, err = obj.GetNextByIdClassicsId(db, form.Id, form.ClassicsId)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -182,10 +182,10 @@ func NextBookContent(form req.PrevNext) (res rsp.Catalogue, err error) {
 		return
 	}
 
-	res.Id = content.Id
-	res.ClassicsId = content.ClassicsId
-	res.Title = content.Title
-	res.Content = content.Content
+	res.Id = data.Id
+	res.ClassicsId = data.ClassicsId
+	res.Title = data.Title
+	res.Content = data.Content
 
 	return
 }

@@ -24,8 +24,6 @@ func Wx(form req.Wx) (token string, err error) {
 		return
 	}
 
-	//fmt.Println(string(b))
-
 	var res rsp.WxAccessToken
 
 	err = json.Unmarshal(b, &res)

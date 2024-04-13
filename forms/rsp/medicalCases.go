@@ -97,27 +97,43 @@ type MindMethod struct {
 	Content string `json:"content"`
 }
 
-type PrescriptionCategoryRsp struct {
-	Total int64                  `json:"total"`
-	List  []PrescriptionCategory `json:"list"`
+type CommonlyPrescriptionCategoryRsp struct {
+	Total int64                          `json:"total"`
+	List  []CommonlyPrescriptionCategory `json:"list"`
 }
 
-type PrescriptionCategory struct {
+type CommonlyPrescriptionCategory struct {
 	Id   int    `json:"id"`
 	Name string `json:"name"`
 }
 
-type PrescriptionRsp struct {
-	Total int64          `json:"total"`
-	List  []Prescription `json:"list"`
+type CommonlyPrescriptionRsp struct {
+	Total int64                  `json:"total"`
+	List  []CommonlyPrescription `json:"list"`
 }
 
-type Prescription struct {
+type CommonlyPrescription struct {
+	Id          int    `json:"id"`
+	Title       string `json:"title"`
+	Provenance  string `json:"provenance"`
+	Constituent string `json:"constituent"` //组成成分
+	Usage       string `json:"usage"`       //用法
+	Efficacy    string `json:"efficacy"`    //功效
+	Mainly      string `json:"mainly"`      //主治
+	Song        string `json:"song"`        //方歌
+	CategoryId  int    `json:"category_id"`
+}
+
+type CompleteCollectionPrescriptionRsp struct {
+	Total int64                            `json:"total"`
+	List  []CompleteCollectionPrescription `json:"list"`
+}
+
+type CompleteCollectionPrescription struct {
 	Id         int    `json:"id"`
 	Title      string `json:"title"`
 	Content    string `json:"content"`
 	Provenance string `json:"provenance"`
-	CategoryId int    `json:"category_id"`
 }
 
 type ClinicalRsp struct {

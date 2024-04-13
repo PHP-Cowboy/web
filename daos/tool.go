@@ -14,18 +14,18 @@ func ToolList(form req.ToolList) (res rsp.ToolRsp, err error) {
 
 	var (
 		total    int64
-		toolList []model.Tool
+		dataList []model.Tool
 	)
 
-	total, toolList, err = obj.GetPageList(db, form)
+	total, dataList, err = obj.GetPageList(db, form)
 
 	if err != nil {
 		return
 	}
 
-	list := make([]rsp.Tool, 0, len(toolList))
+	list := make([]rsp.Tool, 0, len(dataList))
 
-	for _, cl := range toolList {
+	for _, cl := range dataList {
 		list = append(list, rsp.Tool{
 			Id:      cl.Id,
 			Name:    cl.Name,
@@ -49,18 +49,18 @@ func MindMapList(form req.MindMapList) (res rsp.MindMapRsp, err error) {
 
 	var (
 		total    int64
-		mindList []model.MindMap
+		dataList []model.MindMap
 	)
 
-	total, mindList, err = obj.GetPageList(db, form)
+	total, dataList, err = obj.GetPageList(db, form)
 
 	if err != nil {
 		return
 	}
 
-	list := make([]rsp.MindMap, 0, len(mindList))
+	list := make([]rsp.MindMap, 0, len(dataList))
 
-	for _, cl := range mindList {
+	for _, cl := range dataList {
 		list = append(list, rsp.MindMap{
 			Id:      cl.Id,
 			Title:   cl.Title,
@@ -81,18 +81,18 @@ func DiseaseCategory() (res []rsp.Group, err error) {
 	obj := model.DiseaseCategory{}
 
 	var (
-		cateList []model.DiseaseCategory
+		dataList []model.DiseaseCategory
 	)
 
-	cateList, err = obj.GetList(db)
+	dataList, err = obj.GetList(db)
 
 	if err != nil {
 		return
 	}
 
-	list := make([]rsp.Group, 0, len(cateList))
+	list := make([]rsp.Group, 0, len(dataList))
 
-	for _, cl := range cateList {
+	for _, cl := range dataList {
 		list = append(list, rsp.Group{
 			Id:       cl.Id,
 			ParentId: cl.ParentId,
@@ -128,19 +128,19 @@ func Disease(form req.DiseaseList) (res rsp.DiseaseRsp, err error) {
 	obj := model.Disease{}
 
 	var (
-		total       int64
-		diseaseList []model.Disease
+		total    int64
+		dataList []model.Disease
 	)
 
-	diseaseList, err = obj.GetListByCategoryId(db, form.CategoryId)
+	dataList, err = obj.GetListByCategoryId(db, form.CategoryId)
 
 	if err != nil {
 		return
 	}
 
-	list := make([]rsp.Disease, 0, len(diseaseList))
+	list := make([]rsp.Disease, 0, len(dataList))
 
-	for _, cl := range diseaseList {
+	for _, cl := range dataList {
 		list = append(list, rsp.Disease{
 			Id:      cl.Id,
 			Title:   cl.Title,
@@ -161,19 +161,19 @@ func MindMethodList(form req.MindMethodList) (res rsp.MindMethodRsp, err error) 
 	obj := model.MindMethod{}
 
 	var (
-		total          int64
-		mindMethodList []model.MindMethod
+		total    int64
+		dataList []model.MindMethod
 	)
 
-	total, mindMethodList, err = obj.GetPageList(db, form)
+	total, dataList, err = obj.GetPageList(db, form)
 
 	if err != nil {
 		return
 	}
 
-	list := make([]rsp.MindMethod, 0, len(mindMethodList))
+	list := make([]rsp.MindMethod, 0, len(dataList))
 
-	for _, cl := range mindMethodList {
+	for _, cl := range dataList {
 		list = append(list, rsp.MindMethod{
 			Id:     cl.Id,
 			Title:  cl.Title,
@@ -193,43 +193,43 @@ func MindMethod(form req.Id) (res rsp.MindMethod, err error) {
 
 	obj := model.MindMethod{}
 
-	var mindMethod model.MindMethod
+	var data model.MindMethod
 
-	mindMethod, err = obj.GetFirst(db, form)
+	data, err = obj.GetFirst(db, form)
 
 	if err != nil {
 		return
 	}
 
-	res.Id = mindMethod.Id
-	res.Title = mindMethod.Title
-	res.Doctor = mindMethod.Doctor
-	res.Content = mindMethod.Content
+	res.Id = data.Id
+	res.Title = data.Title
+	res.Doctor = data.Doctor
+	res.Content = data.Content
 
 	return
 }
 
 // 中医方剂分类列表
-func PrescriptionCategoryList(form req.PrescriptionCategoryList) (res rsp.PrescriptionCategoryRsp, err error) {
+func CommonlyPrescriptionCategoryList(form req.CommonlyPrescriptionCategoryList) (res rsp.CommonlyPrescriptionCategoryRsp, err error) {
 	db := global.DB
 
-	obj := model.PrescriptionCategory{}
+	obj := model.CommonlyPrescriptionCategory{}
 
 	var (
-		total          int64
-		mindMethodList []model.PrescriptionCategory
+		total    int64
+		dataList []model.CommonlyPrescriptionCategory
 	)
 
-	total, mindMethodList, err = obj.GetPageList(db, form)
+	total, dataList, err = obj.GetPageList(db, form)
 
 	if err != nil {
 		return
 	}
 
-	list := make([]rsp.PrescriptionCategory, 0, len(mindMethodList))
+	list := make([]rsp.CommonlyPrescriptionCategory, 0, len(dataList))
 
-	for _, cl := range mindMethodList {
-		list = append(list, rsp.PrescriptionCategory{
+	for _, cl := range dataList {
+		list = append(list, rsp.CommonlyPrescriptionCategory{
 			Id:   cl.Id,
 			Name: cl.Name,
 		})
@@ -241,32 +241,36 @@ func PrescriptionCategoryList(form req.PrescriptionCategoryList) (res rsp.Prescr
 	return
 }
 
-// 中医方剂列表
-func PrescriptionList(form req.PrescriptionList) (res rsp.PrescriptionRsp, err error) {
+// 常用方剂列表
+func CommonlyPrescriptionList(form req.CommonlyPrescriptionList) (res rsp.CommonlyPrescriptionRsp, err error) {
 	db := global.DB
 
-	obj := model.Prescription{}
+	obj := model.CommonlyPrescription{}
 
 	var (
-		total          int64
-		mindMethodList []model.Prescription
+		total    int64
+		dataList []model.CommonlyPrescription
 	)
 
-	total, mindMethodList, err = obj.GetPageList(db, form)
+	total, dataList, err = obj.GetPageList(db, form)
 
 	if err != nil {
 		return
 	}
 
-	list := make([]rsp.Prescription, 0, len(mindMethodList))
+	list := make([]rsp.CommonlyPrescription, 0, len(dataList))
 
-	for _, cl := range mindMethodList {
-		list = append(list, rsp.Prescription{
-			Id:         cl.Id,
-			Title:      cl.Title,
-			Content:    cl.Content,
-			Provenance: cl.Provenance,
-			CategoryId: cl.CategoryId,
+	for _, cl := range dataList {
+		list = append(list, rsp.CommonlyPrescription{
+			Id:          cl.Id,
+			Title:       cl.Title,
+			Provenance:  cl.Provenance,
+			Constituent: cl.Constituent,
+			Usage:       cl.Usage,
+			Efficacy:    cl.Efficacy,
+			Mainly:      cl.Mainly,
+			Song:        cl.Song,
+			CategoryId:  cl.CategoryId,
 		})
 	}
 
@@ -277,24 +281,85 @@ func PrescriptionList(form req.PrescriptionList) (res rsp.PrescriptionRsp, err e
 }
 
 // 中医方剂详情
-func Prescription(form req.Id) (res rsp.Prescription, err error) {
+func CommonlyPrescription(form req.Id) (res rsp.CommonlyPrescription, err error) {
 	db := global.DB
 
-	obj := model.Prescription{}
+	obj := model.CommonlyPrescription{}
 
-	var mindMethod model.Prescription
+	var data model.CommonlyPrescription
 
-	mindMethod, err = obj.GetFirst(db, form)
+	data, err = obj.GetFirst(db, form)
 
 	if err != nil {
 		return
 	}
 
-	res.Id = mindMethod.Id
-	res.Title = mindMethod.Title
-	res.Content = mindMethod.Content
-	res.Provenance = mindMethod.Provenance
-	res.CategoryId = mindMethod.CategoryId
+	res.Id = data.Id
+	res.Title = data.Title
+	res.Provenance = data.Provenance
+	res.Constituent = data.Constituent
+	res.Usage = data.Usage
+	res.Efficacy = data.Efficacy
+	res.Mainly = data.Mainly
+	res.Song = data.Song
+	res.CategoryId = data.CategoryId
+
+	return
+}
+
+// 常用方剂列表
+func CompleteCollectionPrescriptionList(form req.CompleteCollectionPrescriptionList) (res rsp.CompleteCollectionPrescriptionRsp, err error) {
+
+	db := global.DB
+
+	obj := model.CompleteCollectionPrescription{}
+
+	var (
+		total    int64
+		dataList []model.CompleteCollectionPrescription
+	)
+
+	total, dataList, err = obj.GetPageList(db, form)
+
+	if err != nil {
+		return
+	}
+
+	list := make([]rsp.CompleteCollectionPrescription, 0, len(dataList))
+
+	for _, cl := range dataList {
+		list = append(list, rsp.CompleteCollectionPrescription{
+			Id:         cl.Id,
+			Title:      cl.Title,
+			Provenance: cl.Provenance,
+			Content:    cl.Content,
+		})
+	}
+
+	res.List = list
+	res.Total = total
+
+	return
+}
+
+// 中医方剂详情
+func CompleteCollectionPrescription(form req.Id) (res rsp.CompleteCollectionPrescription, err error) {
+	db := global.DB
+
+	obj := model.CompleteCollectionPrescription{}
+
+	var data model.CompleteCollectionPrescription
+
+	data, err = obj.GetFirst(db, form)
+
+	if err != nil {
+		return
+	}
+
+	res.Id = data.Id
+	res.Title = data.Title
+	res.Provenance = data.Provenance
+	res.Content = data.Content
 
 	return
 }

@@ -31,21 +31,29 @@ func HomeRoute(g *gin.RouterGroup) {
 	{
 		m.POST("/list", controller.MindMapList) //思维导图列表
 	}
+	//常见疾病辩证辅助
 	d := h.Group("/disease")
 	{
 		d.POST("/category", controller.DiseaseCategory) //疾病分类
 		d.POST("/disease", controller.DiseaseList)      //疾病分类数据
 	}
+	//名医心法
 	mm := h.Group("/mindMethod")
 	{
-		mm.POST("/list", controller.MindMethodList) //名医心法
-		mm.POST("/info", controller.MindMethod)     //名医心法详情
+		mm.POST("/list", controller.MindMethodList) //列表
+		mm.POST("/info", controller.MindMethod)     //详情
 	}
-
-	p := h.Group("prescription")
+	//常用方剂
+	cp := h.Group("commonlyPrescription")
 	{
-		p.POST("/categoryList", controller.PrescriptionCategoryList) //中医方剂分类列表
-		p.POST("/list", controller.PrescriptionList)                 //中医方剂列表
-		p.POST("/info", controller.Prescription)                     //名医心法详情
+		cp.POST("/categoryList", controller.CommonlyPrescriptionCategoryList) //分类列表
+		cp.POST("/list", controller.CommonlyPrescriptionList)                 //列表
+		cp.POST("/info", controller.CommonlyPrescription)                     //详情
+	}
+	//方剂大全
+	ccp := h.Group("completeCollectionPrescription")
+	{
+		ccp.POST("/list", controller.CompleteCollectionPrescriptionList) //列表
+		ccp.POST("/info", controller.CompleteCollectionPrescription)     //详情
 	}
 }

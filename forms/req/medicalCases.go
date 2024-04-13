@@ -51,12 +51,18 @@ type MindMethodList struct {
 	KeyWords string `json:"key_words"`
 }
 
-type PrescriptionCategoryList struct {
+type CommonlyPrescriptionCategoryList struct {
 	Paging
 	KeyWords string `json:"key_words"`
 }
 
-type PrescriptionList struct {
+type CommonlyPrescriptionList struct {
+	Paging
+	KeyWords   string `json:"key_words"`
+	CategoryId int    `json:"category_id"`
+}
+
+type CompleteCollectionPrescriptionList struct {
 	Paging
 	KeyWords   string `json:"key_words"`
 	CategoryId int    `json:"category_id"`

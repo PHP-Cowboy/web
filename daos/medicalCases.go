@@ -14,8 +14,8 @@ func MedicalCasesList(form req.MedicalCasesList) (res rsp.MedicalCasesRsp, err e
 	obj := &model.MedicalCases{}
 
 	var (
-		medicalCasesList []model.MedicalCases
-		total            int64
+		dataList []model.MedicalCases
+		total    int64
 	)
 
 	total, err = obj.GetLikeCount(db, form)
@@ -24,15 +24,15 @@ func MedicalCasesList(form req.MedicalCasesList) (res rsp.MedicalCasesRsp, err e
 		return
 	}
 
-	medicalCasesList, err = obj.GetLikePageList(db, form)
+	dataList, err = obj.GetLikePageList(db, form)
 
 	if err != nil {
 		return
 	}
 
-	list := make([]rsp.MedicalCases, 0, len(medicalCasesList))
+	list := make([]rsp.MedicalCases, 0, len(dataList))
 
-	for _, m := range medicalCasesList {
+	for _, m := range dataList {
 		list = append(list, rsp.MedicalCases{
 			Id:           m.Id,
 			Symptom:      m.Symptom,
@@ -55,9 +55,9 @@ func RandMedicalCasesList(form req.MedicalCasesList) (res rsp.MedicalCasesRsp, e
 
 	obj := &model.MedicalCases{}
 
-	medicalCasesList := make([]model.MedicalCases, 0, form.Size)
+	dataList := make([]model.MedicalCases, 0, form.Size)
 
-	medicalCasesList, err = obj.GetRandList(db, form)
+	dataList, err = obj.GetRandList(db, form)
 
 	if err != nil {
 		return
@@ -65,7 +65,7 @@ func RandMedicalCasesList(form req.MedicalCasesList) (res rsp.MedicalCasesRsp, e
 
 	list := make([]rsp.MedicalCases, 0, form.Size)
 
-	for _, m := range medicalCasesList {
+	for _, m := range dataList {
 		list = append(list, rsp.MedicalCases{
 			Id:           m.Id,
 			Symptom:      m.Symptom,
@@ -87,16 +87,16 @@ func MedicalCasesDetail(form req.Id) (res rsp.MedicalCases, err error) {
 
 	obj := &model.MedicalCases{}
 
-	medicalCases, err := obj.GetFirstById(db, form.Id)
+	data, err := obj.GetFirstById(db, form.Id)
 	if err != nil {
 		return
 	}
 
-	res.Id = medicalCases.Id
-	res.Symptom = medicalCases.Symptom
-	res.Prescription = medicalCases.Prescription
-	res.Content = medicalCases.Content
-	res.Provenance = medicalCases.Provenance
+	res.Id = data.Id
+	res.Symptom = data.Symptom
+	res.Prescription = data.Prescription
+	res.Content = data.Content
+	res.Provenance = data.Provenance
 
 	return
 }

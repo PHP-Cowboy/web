@@ -22,30 +22,30 @@ import (
 
 // 密码登录
 func LoginByPwd(form req.LoginByPwd) (token string, err error) {
-	user := model.User{}
+	data := model.User{}
 
 	db := global.DB
 	obj := new(model.User)
 
-	err, user = obj.GetUserByPhone(db, form.Phone)
+	err, data = obj.GetUserByPhone(db, form.Phone)
 
 	if err != nil {
 		return
 	}
 
 	//校验用户状态
-	if user.Status != model.UserStatusNormal {
+	if data.Status != model.UserStatusNormal {
 		err = ecode.UserNotFound
 		return
 	}
 
 	//验证密码
-	if !CheckPwd(form.Password, user.Password) {
+	if !CheckPwd(form.Password, data.Password) {
 		err = ecode.PasswordCheckFailed
 		return
 	}
 
-	token, err = GetToken(&user)
+	token, err = GetToken(&data)
 
 	return
 }
@@ -69,7 +69,7 @@ func LoginByCode(form req.LoginByCode) (token string, err error) {
 }
 
 func Login(p req.LoginParams) (token string, err error) {
-	user := model.User{}
+	data := model.User{}
 
 	db := global.DB
 	obj := new(model.User)
@@ -81,23 +81,23 @@ func Login(p req.LoginParams) (token string, err error) {
 
 	switch p.Type {
 	case 1: //手机号
-		err, user = obj.GetUserByPhone(db, p.Param)
+		err, data = obj.GetUserByPhone(db, p.Param)
 		phone = p.Param
 	case 2: //微信
-		err, user = obj.GetUserByUnionId(db, p.Param)
+		err, data = obj.GetUserByUnionId(db, p.Param)
 		unionId = p.Param
 	}
 
 	if err == nil {
 		//校验用户状态
-		if user.Status != model.UserStatusNormal {
+		if data.Status != model.UserStatusNormal {
 			err = ecode.UserNotFound
 			return
 		}
 	} else {
 		//有错误，错误是数据未找到，走注册逻辑
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			user = model.User{
+			data = model.User{
 				Phone:    phone,
 				UnionId:  unionId,
 				Name:     p.Param,
@@ -105,7 +105,7 @@ func Login(p req.LoginParams) (token string, err error) {
 				Status:   model.UserStatusNormal,
 			}
 
-			err = db.Create(&user).Error
+			err = db.Create(&data).Error
 
 			if err != nil {
 				return
@@ -117,26 +117,26 @@ func Login(p req.LoginParams) (token string, err error) {
 	}
 
 	//生成token
-	token, err = GetToken(&user)
+	token, err = GetToken(&data)
 
 	return
 }
 
 // 注册用户
 func Registration(req req.Registration) (token string, err error) {
-	user := model.User{}
+	data := model.User{}
 
 	db := global.DB
 	obj := new(model.User)
 
-	err, user = obj.GetUserByPhone(db, req.Phone)
+	err, data = obj.GetUserByPhone(db, req.Phone)
 
 	//有错误，且不是数据未找到
 	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
 		return
 	}
 
-	if user.Id > 0 {
+	if data.Id > 0 {
 		err = ecode.PhoneAlreadyExist
 		return
 	}

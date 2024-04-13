@@ -13,19 +13,19 @@ func ClinicalList(form req.ClinicalList) (res rsp.ClinicalRsp, err error) {
 	obj := model.Clinical{}
 
 	var (
-		total        int64
-		clinicalList []model.Clinical
+		total    int64
+		dataList []model.Clinical
 	)
 
-	total, clinicalList, err = obj.GetPageList(db, form)
+	total, dataList, err = obj.GetPageList(db, form)
 
 	if err != nil {
 		return
 	}
 
-	list := make([]rsp.Clinical, 0, len(clinicalList))
+	list := make([]rsp.Clinical, 0, len(dataList))
 
-	for _, cl := range clinicalList {
+	for _, cl := range dataList {
 		list = append(list, rsp.Clinical{
 			Id:      cl.Id,
 			Symptom: cl.Symptom,
@@ -47,7 +47,7 @@ func BigDataPieChart(form req.BigDataPieChart) (res rsp.BigDataPieChartRsp, err 
 
 	var (
 		bigDataList []model.BigData
-		category    model.BigDataCategory
+		data        model.BigDataCategory
 	)
 
 	bigDataList, err = bigDataObj.GetListByCategoryId(db, form.CategoryId)
@@ -65,7 +65,7 @@ func BigDataPieChart(form req.BigDataPieChart) (res rsp.BigDataPieChartRsp, err 
 		})
 	}
 
-	category, err = categoryObj.GetOneById(db, form.CategoryId)
+	data, err = categoryObj.GetOneById(db, form.CategoryId)
 
 	if err != nil {
 		return
@@ -73,8 +73,8 @@ func BigDataPieChart(form req.BigDataPieChart) (res rsp.BigDataPieChartRsp, err 
 
 	res.List = list
 	res.Category = rsp.Category{
-		Id:   category.Id,
-		Name: category.Name,
+		Id:   data.Id,
+		Name: data.Name,
 	}
 
 	return
