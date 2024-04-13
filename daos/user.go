@@ -6,12 +6,10 @@ import (
 	"errors"
 	"fmt"
 	"github.com/anaskhan96/go-password-encoder"
-	"github.com/golang-jwt/jwt"
 	"gorm.io/gorm"
 	"io"
 	"net/http"
 	"strings"
-	"time"
 	"web/forms/req"
 	"web/forms/rsp"
 	"web/global"
@@ -22,6 +20,7 @@ import (
 
 // 密码登录
 func LoginByPwd(form req.LoginByPwd) (token string, err error) {
+
 	data := model.User{}
 
 	db := global.DB
@@ -69,6 +68,7 @@ func LoginByCode(form req.LoginByCode) (token string, err error) {
 }
 
 func Login(p req.LoginParams) (token string, err error) {
+
 	data := model.User{}
 
 	db := global.DB
@@ -124,6 +124,7 @@ func Login(p req.LoginParams) (token string, err error) {
 
 // 注册用户
 func Registration(req req.Registration) (token string, err error) {
+
 	data := model.User{}
 
 	db := global.DB
@@ -187,11 +188,13 @@ func GenderPwd(pwd string) string {
 }
 
 func GetToken(user *model.User) (token string, err error) {
-	hour := time.Duration(24)
+	if !CheckTime() {
+		err = errors.New("已过期")
+		return
+	}
 
 	claims := middlewares.CustomClaims{
-		Id:             user.Id,
-		StandardClaims: jwt.StandardClaims{ExpiresAt: time.Now().Add(hour * time.Hour).Unix()},
+		Id: user.Id,
 	}
 
 	j := middlewares.NewJwt()

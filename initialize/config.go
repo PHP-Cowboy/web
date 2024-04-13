@@ -10,7 +10,7 @@ import (
 func InitConfig() {
 	v := viper.New()
 
-	v.SetConfigFile("config.yaml")
+	v.SetConfigFile("config.json")
 
 	err := v.ReadInConfig()
 	if err != nil {
@@ -23,5 +23,5 @@ func InitConfig() {
 	if err != nil {
 		panic("解析配置失败:" + err.Error())
 	}
-	fmt.Println(&global.ServerConfig)
+	fmt.Printf("config: %+v", global.ServerConfig)
 }

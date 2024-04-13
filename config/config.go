@@ -1,31 +1,32 @@
 package config
 
 type ServerConfig struct {
-	Port      int         `mapstructure:"port" json:"port"`
-	MysqlInfo MysqlConfig `mapstructure:"mysql" json:"mysql"`
-	JwtInfo   JWTConfig   `mapstructure:"jwt" json:"jwt"`
-	Sms       Sms         `mapstructure:"sms" json:"sms"`
-	ThirdApp  ThirdApp    `mapstructure:"thirdApp" json:"thirdApp"`
+	Port      int         `json:"port"`
+	MysqlInfo MysqlConfig `json:"mysqlInfo"`
+	JwtInfo   JWTConfig   `json:"jwtInfo"`
+	Sms       Sms         `json:"sms"`
+	ThirdApp  ThirdApp    `json:"thirdApp"`
 }
 
 type MysqlConfig struct {
-	Host     string `mapstructure:"host" json:"host"`
-	Port     int    `mapstructure:"port" json:"port"`
-	Name     string `mapstructure:"name"`
-	User     string `mapstructure:"user"`
-	Password string `mapstructure:"password"`
+	Host     string `json:"host"`
+	Port     int    `json:"port"`
+	Name     string `json:"name"`
+	User     string `json:"user"`
+	Password string `json:"password"`
 }
 
 type JWTConfig struct {
-	SigningKey string `mapstructure:"key" json:"key"`
+	SigningKey  string `json:"key"`
+	ExpiresHour string `json:"expiresHour"`
 }
 
 type Sms struct {
-	AppKey string `mapstructure:"appKey" json:"appKey"`
-	Secret string `mapstructure:"secret" json:"secret"`
+	AppKey string `json:"appKey"`
+	Secret string `json:"secret"`
 }
 
 type ThirdApp struct {
-	AppId  string `mapstructure:"appId" json:"appId"`
-	Secret string `mapstructure:"secret" json:"secret"`
+	AppId  string `json:"appId"`
+	Secret string `json:"secret"`
 }

@@ -3,15 +3,38 @@ package daos
 import (
 	"encoding/json"
 	"fmt"
+	"time"
 	"web/common/constant"
 	"web/forms/req"
 	"web/forms/rsp"
 	"web/global"
 	"web/utils/ecode"
 	"web/utils/request"
+	"web/utils/timeutil"
 )
 
+func CheckTime() bool {
+
+	p, pErr := time.ParseInLocation(timeutil.TimeFormat, "2024-05-13 23:35:00", time.Local)
+
+	if pErr != nil {
+		return false
+	}
+
+	now := time.Now()
+
+	fmt.Println("now :", now.Unix(), "---", now.Format(timeutil.TimeFormat))
+	fmt.Println("date:", p.Unix(), "---", p.Format(timeutil.TimeFormat))
+
+	if now.Unix() > p.Unix() {
+		return false
+	}
+
+	return true
+}
+
 func Wx(form req.Wx) (token string, err error) {
+
 	app := global.ServerConfig.ThirdApp
 
 	url := constant.GetAccessToken + fmt.Sprintf("?appid=%s&secret=%s&code=%s&grant_type=authorization_code", app.AppId, app.Secret, form.Code)

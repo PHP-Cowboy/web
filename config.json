@@ -1,0 +1,23 @@
+{
+  "port": 8088,
+  "mysqlInfo": {
+	"host": "47.109.133.46",
+	"port": 3306,
+	"name": "shl",
+	"user": "root",
+	"password": "8VQbH!p$yRGZ0bAn"
+  },
+  "jwtInfo": {
+	"key": "OnJRISd2iEr3pwEyGtSuZn6IoFAKyL2QQDyhZ&xDyi",
+	"expiresHour": 24
+  },
+  "sms": {
+	"appKey": "3934387ba6b2c",
+	"secret": "cf6f473de025d9cc0d201678b15d224a"
+  },
+  "thirdApp": {
+	"appId": "wxf90bff03c4ff4db2",
+	"secret": "9e95109bb595b93e41eee151536c38a8",
+	"mchId": "1664657812"
+  }
+}

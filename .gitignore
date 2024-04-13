@@ -3,5 +3,5 @@
 logs
 go.mod
 go.sum
-config.yaml
+config.json
 web
