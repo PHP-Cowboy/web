@@ -62,6 +62,7 @@ func main() {
 	//_ = db.Set(model.TableOptions, model.GetOptions("方剂大全")).AutoMigrate(&model.CompleteCollectionPrescription{})
 	//_ = db.Set(model.TableOptions, model.GetOptions("大数据方剂")).AutoMigrate(&model.Prescription{})
 	//_ = db.Set(model.TableOptions, model.GetOptions("大数据方剂名家")).AutoMigrate(&model.Celebrity{})
-	_ = db.Set(model.TableOptions, model.GetOptions("大数据方剂图表")).AutoMigrate(&model.PrescriptionGraph{})
+	//_ = db.Set(model.TableOptions, model.GetOptions("大数据方剂图表")).AutoMigrate(&model.PrescriptionGraph{})
+	_ = db.Set(model.TableOptions, model.GetOptions("伤寒论")).AutoMigrate(&model.Typhoid{})
 
 }

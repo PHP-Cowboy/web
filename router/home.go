@@ -28,6 +28,15 @@ func HomeRoute(g *gin.RouterGroup) {
 		p.POST("/celebrityInfoByPrescriptionId", controller.PrescriptionCelebrityInfoByPrescriptionId) //根据方剂id获取名家详情
 		p.POST("/graph", controller.PrescriptionGraph)                                                 //大数据方剂名家列表
 	}
+	//伤寒论
+	ty := h.Group("/typhoid")
+	{
+		ty.POST("/catalogueList", controller.TyphoidCatalogueList) //伤寒论目录列表
+		ty.POST("/info", controller.TyphoidInfo)                   //伤寒论的内容
+		ty.POST("/prev", controller.TyphoidPrev)                   //伤寒论上一章
+		ty.POST("/next", controller.TyphoidNext)                   //伤寒论下一章
+	}
+
 	cs := h.Group("/classics")
 	{
 		cs.POST("/categoryList", controller.ClassicsCategoryList) //典籍分类列表
