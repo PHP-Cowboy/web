@@ -59,3 +59,10 @@ type CompleteCollectionPrescriptionList struct {
 	KeyWords   string `json:"key_words"`
 	CategoryId int    `json:"category_id"`
 }
+
+type QuestionCategoryList struct {
+	Paging
+}
+
+type QuestionList struct {
+}

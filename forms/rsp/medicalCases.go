@@ -142,3 +142,27 @@ type Group struct {
 	Name     string  `json:"name"`
 	Children []Group `json:"children"`
 }
+
+type QuestionCategoryRsp struct {
+	Total int64              `json:"total"`
+	List  []QuestionCategory `json:"list"`
+}
+
+type QuestionCategory struct {
+	Id   int    `json:"id"`
+	Name string `json:"name"`
+}
+
+type Question struct {
+	Id         int    `json:"id"`
+	CategoryId int    `json:"category_id"`
+	Number     int    `json:"number"`
+	Topic      string `json:"topic"`
+	A          string `json:"a"`
+	B          string `json:"b"`
+	C          string `json:"c"`
+	D          string `json:"d"`
+	E          string `json:"e"`
+	Answer     string `json:"answer"`
+	Analysis   string `json:"analysis"`
+}

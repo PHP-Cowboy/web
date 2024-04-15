@@ -79,4 +79,13 @@ func HomeRoute(g *gin.RouterGroup) {
 		ccp.POST("/list", controller.CompleteCollectionPrescriptionList) //列表
 		ccp.POST("/info", controller.CompleteCollectionPrescription)     //详情
 	}
+	//医考题库
+	q := h.Group("question")
+	{
+		q.POST("/categoryList", controller.QuestionCategoryList) //题库类别列表
+		q.POST("/list", controller.QuestionList)                 //题目列表
+		q.POST("/info", controller.QuestionInfo)                 //题目的内容
+		q.POST("/prev", controller.QuestionPrev)                 //上一题
+		q.POST("/next", controller.QuestionNext)                 //下一题
+	}
 }

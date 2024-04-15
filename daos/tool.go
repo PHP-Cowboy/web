@@ -1,6 +1,8 @@
 package daos
 
 import (
+	"errors"
+	"gorm.io/gorm"
 	"web/forms/req"
 	"web/forms/rsp"
 	"web/global"
@@ -359,6 +361,177 @@ func CompleteCollectionPrescription(form req.Id) (res rsp.CompleteCollectionPres
 	res.Title = data.Title
 	res.Provenance = data.Provenance
 	res.Content = data.Content
+
+	return
+}
+
+// 题库类别列表
+func QuestionCategoryList(form req.QuestionCategoryList) (res rsp.QuestionCategoryRsp, err error) {
+
+	db := global.DB
+
+	obj := model.QuestionCategory{}
+
+	var (
+		total    int64
+		dataList []model.QuestionCategory
+	)
+
+	total, dataList, err = obj.GetPageList(db, form)
+
+	if err != nil {
+		return
+	}
+
+	list := make([]rsp.QuestionCategory, 0, len(dataList))
+
+	for _, cl := range dataList {
+		list = append(list, rsp.QuestionCategory{
+			Id:   cl.Id,
+			Name: cl.Name,
+		})
+	}
+
+	res.List = list
+	res.Total = total
+
+	return
+}
+
+func QuestionList(form req.Id) (list []rsp.Question, err error) {
+
+	db := global.DB
+
+	obj := model.Question{}
+
+	var (
+		dataList []model.Question
+	)
+
+	dataList, err = obj.GetPageList(db, form)
+
+	if err != nil {
+		return
+	}
+
+	list = make([]rsp.Question, 0, len(dataList))
+
+	for _, cl := range dataList {
+		list = append(list, rsp.Question{
+			Id:         cl.Id,
+			CategoryId: cl.CategoryId,
+			Number:     cl.Number,
+			Topic:      cl.Topic,
+			A:          cl.A,
+			B:          cl.B,
+			C:          cl.C,
+			D:          cl.D,
+			E:          cl.E,
+			Answer:     cl.Answer,
+			Analysis:   cl.Analysis,
+		})
+	}
+
+	return
+}
+
+// 题目的内容
+func QuestionInfo(form req.Id) (res rsp.Question, err error) {
+	db := global.DB
+
+	obj := model.Question{}
+
+	var (
+		data model.Question
+	)
+
+	data, err = obj.GetOneById(db, form.Id)
+
+	if err != nil {
+		return
+	}
+
+	res.Id = data.Id
+	res.CategoryId = data.CategoryId
+	res.Number = data.Number
+	res.Topic = data.Topic
+	res.A = data.A
+	res.B = data.B
+	res.C = data.C
+	res.D = data.D
+	res.E = data.E
+	res.Answer = data.Answer
+	res.Analysis = data.Analysis
+
+	return
+}
+
+// 上一题
+func QuestionPrev(form req.Id) (res rsp.Question, err error) {
+	db := global.DB
+
+	obj := model.Question{}
+
+	var (
+		data model.Question
+	)
+
+	data, err = obj.GetPrevById(db, form.Id)
+
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			err = errors.New("已经是第一章了")
+			return
+		}
+		return
+	}
+
+	res.Id = data.Id
+	res.CategoryId = data.CategoryId
+	res.Number = data.Number
+	res.Topic = data.Topic
+	res.A = data.A
+	res.B = data.B
+	res.C = data.C
+	res.D = data.D
+	res.E = data.E
+	res.Answer = data.Answer
+	res.Analysis = data.Analysis
+
+	return
+}
+
+// 下一题
+func QuestionNext(form req.Id) (res rsp.Question, err error) {
+	db := global.DB
+
+	obj := model.Question{}
+
+	var (
+		data model.Question
+	)
+
+	data, err = obj.GetNextById(db, form.Id)
+
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			err = errors.New("已经是最后一章了")
+			return
+		}
+		return
+	}
+
+	res.Id = data.Id
+	res.CategoryId = data.CategoryId
+	res.Number = data.Number
+	res.Topic = data.Topic
+	res.A = data.A
+	res.B = data.B
+	res.C = data.C
+	res.D = data.D
+	res.E = data.E
+	res.Answer = data.Answer
+	res.Analysis = data.Analysis
 
 	return
 }

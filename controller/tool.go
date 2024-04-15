@@ -198,3 +198,96 @@ func CompleteCollectionPrescription(c *gin.Context) {
 
 	xsq_net.SucJson(c, res)
 }
+
+// 题库类别列表
+func QuestionCategoryList(c *gin.Context) {
+	form := req.QuestionCategoryList{}
+
+	if err := c.ShouldBind(&form); err != nil {
+		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
+		return
+	}
+
+	res, err := daos.QuestionCategoryList(form)
+	if err != nil {
+		xsq_net.ErrorJSON(c, err)
+		return
+	}
+
+	xsq_net.SucJson(c, res)
+}
+
+// 题目列表
+func QuestionList(c *gin.Context) {
+	form := req.Id{}
+
+	if err := c.ShouldBind(&form); err != nil {
+		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
+		return
+	}
+
+	list, err := daos.QuestionList(form)
+	if err != nil {
+		xsq_net.ErrorJSON(c, err)
+		return
+	}
+
+	xsq_net.SucJson(c, list)
+}
+
+// 题目的内容
+func QuestionInfo(c *gin.Context) {
+	form := req.Id{}
+
+	if err := c.ShouldBind(&form); err != nil {
+		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
+		return
+	}
+
+	res, err := daos.QuestionInfo(form)
+
+	if err != nil {
+		xsq_net.ErrorJSON(c, err)
+		return
+	}
+
+	xsq_net.SucJson(c, res)
+}
+
+// 上一题
+func QuestionPrev(c *gin.Context) {
+	form := req.Id{}
+
+	if err := c.ShouldBind(&form); err != nil {
+		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
+		return
+	}
+
+	res, err := daos.QuestionPrev(form)
+
+	if err != nil {
+		xsq_net.ErrorJSON(c, err)
+		return
+	}
+
+	xsq_net.SucJson(c, res)
+}
+
+// 下一题
+func QuestionNext(c *gin.Context) {
+	form := req.Id{}
+
+	if err := c.ShouldBind(&form); err != nil {
+		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
+		return
+	}
+
+	res, err := daos.QuestionNext(form)
+
+	if err != nil {
+		xsq_net.ErrorJSON(c, err)
+		return
+	}
+
+	xsq_net.SucJson(c, res)
+}
