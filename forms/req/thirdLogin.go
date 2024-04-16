@@ -1,5 +1,5 @@
 package req
 
-type Wx struct {
+type WxLogin struct {
 	Code string `json:"code"`
 }

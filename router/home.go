@@ -88,4 +88,10 @@ func HomeRoute(g *gin.RouterGroup) {
 		q.POST("/prev", controller.QuestionPrev)                 //上一题
 		q.POST("/next", controller.QuestionNext)                 //下一题
 	}
+
+	pay := g.Group("pay")
+	{
+		pay.POST("/wx", controller.WxPay)   //微信支付
+		pay.POST("/aLi", controller.ALiPay) //微信支付
+	}
 }

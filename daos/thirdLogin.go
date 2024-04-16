@@ -33,7 +33,7 @@ func CheckTime() bool {
 	return true
 }
 
-func Wx(form req.Wx) (token string, err error) {
+func Wx(form req.WxLogin) (token string, err error) {
 
 	app := global.ServerConfig.ThirdApp
 

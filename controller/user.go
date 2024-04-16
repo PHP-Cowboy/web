@@ -18,7 +18,7 @@ import (
 
 // 微信登录
 func WxLogin(c *gin.Context) {
-	var form req.Wx
+	var form req.WxLogin
 
 	bindingBody := binding.Default(c.Request.Method, c.ContentType()).(binding.BindingBody)
 
