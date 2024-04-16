@@ -31,7 +31,7 @@ func ALiPay(form req.ALiPay) (payURL string, err error) {
 	p.Subject = "伤寒通览-会员开通"
 	p.OutTradeNo = form.OrderNo
 	p.TotalAmount = "10.00"
-	p.ProductCode = "QUICK_WAP_WAY"
+	p.ProductCode = "QUICK_MSECURITY_PAY"
 
 	URL, err = client.TradeWapPay(p)
 	if err != nil {
