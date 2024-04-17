@@ -1,7 +1,6 @@
 package initialize
 
 import (
-	"fmt"
 	"web/global"
 
 	"github.com/spf13/viper"
@@ -23,5 +22,5 @@ func InitConfig() {
 	if err != nil {
 		panic("解析配置失败:" + err.Error())
 	}
-	fmt.Printf("config: %+v", global.ServerConfig)
+	//fmt.Printf("config: %+v", global.ServerConfig)
 }

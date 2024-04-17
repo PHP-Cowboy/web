@@ -33,3 +33,10 @@ type MsgVerifyRsp struct {
 	Status int    `json:"status"`
 	Error  string `json:"error"`
 }
+
+type PayGift struct {
+	Id    int     `json:"id"`
+	Name  string  `json:"name"`
+	Desc  string  `json:"desc"`
+	Price float64 `json:"price"`
+}

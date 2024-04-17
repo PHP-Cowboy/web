@@ -9,13 +9,16 @@ import (
 	"gorm.io/gorm"
 	"io"
 	"net/http"
+	"strconv"
 	"strings"
+	"time"
 	"web/forms/req"
 	"web/forms/rsp"
 	"web/global"
 	"web/middlewares"
 	"web/model"
 	"web/utils/ecode"
+	"web/utils/timeutil"
 )
 
 // 密码登录
@@ -249,5 +252,63 @@ func Suggestion(form req.Suggestion) (err error) {
 	obj := new(model.Suggestion)
 
 	err = obj.Save(db, form.Uid, form.Msg)
+	return
+}
+
+// 支付礼包
+func PayGiftList() (list []rsp.PayGift, err error) {
+	db := global.DB
+
+	obj := new(model.Gift)
+
+	var dataList []model.Gift
+
+	dataList, err = obj.GetList(db)
+	if err != nil {
+		return
+	}
+
+	list = make([]rsp.PayGift, 0, len(dataList))
+
+	for _, d := range dataList {
+		list = append(list, rsp.PayGift{
+			Id:    d.Id,
+			Name:  d.Name,
+			Desc:  d.Desc,
+			Price: d.Price,
+		})
+	}
+	return
+}
+
+// 生成订单
+func Order(form req.Order) (orderNo string, err error) {
+	db := global.DB
+
+	var gift model.Gift
+
+	giftObj := new(model.Gift)
+
+	gift, err = giftObj.GetFirstById(db, form.Id)
+
+	if err != nil {
+		return
+	}
+
+	now := time.Now()
+
+	orderNo = now.Format(timeutil.TimeFormNoSplit) + strconv.Itoa(now.Nanosecond())
+
+	obj := &model.Order{
+		Uid:     form.Uid,
+		OrderNo: orderNo,
+		Status:  model.OrderStatusNotPay,
+		GiftId:  gift.Id,
+		Price:   gift.Price,
+		PayType: form.PayType,
+	}
+
+	err = obj.Save(db)
+
 	return
 }

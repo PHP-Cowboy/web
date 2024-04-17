@@ -17,8 +17,6 @@ type CustomClaims struct {
 	jwt.StandardClaims
 }
 
-var jwtInfo = global.ServerConfig.JwtInfo
-
 func JWTAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 我们这里jwt鉴权取头部信息 x-token 登录时回返回token信息 这里前端需要把token存储到cookie或者本地localStorage中
@@ -67,7 +65,7 @@ func NewJwt() *Jwt {
 
 // 创建token
 func (j *Jwt) CreateToken(claims CustomClaims) (string, error) {
-	claims.ExpiresAt = time.Now().Add(jwtInfo.ExpiresHour * time.Hour).Unix()
+	claims.ExpiresAt = time.Now().Add(time.Duration(global.ServerConfig.JwtInfo.ExpiresHour) * time.Hour).Unix()
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString(j.Key)
 }
@@ -119,7 +117,7 @@ func (j *Jwt) RefreshToken(tokenString string) (string, error) {
 
 	if claims, ok := token.Claims.(*CustomClaims); ok && token.Valid {
 		jwt.TimeFunc = time.Now
-		claims.StandardClaims.ExpiresAt = time.Now().Add(time.Hour * jwtInfo.ExpiresHour).Unix()
+		claims.StandardClaims.ExpiresAt = time.Now().Add(time.Hour * time.Duration(global.ServerConfig.JwtInfo.ExpiresHour)).Unix()
 		return j.CreateToken(*claims)
 	}
 	return "", TokenInvalid

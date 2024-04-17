@@ -61,3 +61,12 @@ type Suggestion struct {
 	Uid int
 	Msg string `json:"msg" binding:"required"`
 }
+
+type PayGiftList struct {
+}
+
+type Order struct {
+	Id      int `json:"id" binding:"required"`
+	PayType int `json:"pay_type" binding:"required"`
+	Uid     int
+}

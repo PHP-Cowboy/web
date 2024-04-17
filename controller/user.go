@@ -190,3 +190,46 @@ func Suggestion(c *gin.Context) {
 
 	xsq_net.Success(c)
 }
+
+// 支付礼包列表
+func PayGiftList(c *gin.Context) {
+
+	list, err := daos.PayGiftList()
+
+	if err != nil {
+		xsq_net.ErrorJSON(c, err)
+		return
+	}
+
+	xsq_net.SucJson(c, list)
+}
+
+// 生成订单
+func Order(c *gin.Context) {
+	var form req.Order
+
+	bindingBody := binding.Default(c.Request.Method, c.ContentType()).(binding.BindingBody)
+
+	if err := c.ShouldBindBodyWith(&form, bindingBody); err != nil {
+		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
+		return
+	}
+
+	uid, ok := c.Get("uid")
+
+	if !ok {
+		xsq_net.ErrorJSON(c, ecode.UserNotLogin)
+		return
+	}
+
+	form.Uid = uid.(int)
+
+	orderNo, err := daos.Order(form)
+
+	if err != nil {
+		xsq_net.ErrorJSON(c, err)
+		return
+	}
+
+	xsq_net.SucJson(c, gin.H{"orderNo": orderNo})
+}

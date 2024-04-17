@@ -24,6 +24,10 @@ func UserRoute(g *gin.RouterGroup) {
 		loginGroup.POST("/change", controller.ChangeUser)
 		//建议
 		loginGroup.POST("/suggestion", controller.Suggestion)
+		//支付礼包列表
+		loginGroup.POST("/payGiftList", controller.PayGiftList)
+		//根据礼包创建订单
+		loginGroup.POST("/order", controller.Order)
 	}
 
 }

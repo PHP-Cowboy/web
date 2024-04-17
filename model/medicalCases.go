@@ -35,8 +35,8 @@ func (t *MedicalCases) Count(db *gorm.DB) (total int64, err error) {
 	return
 }
 
-func (t *MedicalCases) GetFirstById(db *gorm.DB, id int) (MedicalCases MedicalCases, err error) {
-	err = db.Model(t).Where("id = ?", id).First(&MedicalCases).Error
+func (t *MedicalCases) GetFirstById(db *gorm.DB, id int) (data MedicalCases, err error) {
+	err = db.Model(t).Where("id = ?", id).First(&data).Error
 	return
 }
 
