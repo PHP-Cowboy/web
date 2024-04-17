@@ -13,7 +13,8 @@ func WxPay(c *gin.Context) {
 
 }
 
-func ALiPay(c *gin.Context) {
+// 阿里app支付
+func ALiTradeAppPay(c *gin.Context) {
 	var form req.ALiPay
 
 	bindingBody := binding.Default(c.Request.Method, c.ContentType()).(binding.BindingBody)
@@ -23,11 +24,31 @@ func ALiPay(c *gin.Context) {
 		return
 	}
 
-	payURL, err := daos.ALiPay(form)
+	result, err := daos.ALiTradeAppPay(form)
 	if err != nil {
 		xsq_net.ErrorJSON(c, err)
 		return
 	}
 
-	xsq_net.SucJson(c, gin.H{"payURL": payURL})
+	xsq_net.SucJson(c, gin.H{"result": result})
+}
+
+// 阿里wap支付
+func ALiTradeWapPay(c *gin.Context) {
+	var form req.ALiPay
+
+	bindingBody := binding.Default(c.Request.Method, c.ContentType()).(binding.BindingBody)
+
+	if err := c.ShouldBindBodyWith(&form, bindingBody); err != nil {
+		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
+		return
+	}
+
+	result, err := daos.ALiTradeWapPay(form)
+	if err != nil {
+		xsq_net.ErrorJSON(c, err)
+		return
+	}
+
+	xsq_net.SucJson(c, gin.H{"result": result})
 }

@@ -91,7 +91,8 @@ func HomeRoute(g *gin.RouterGroup) {
 
 	pay := g.Group("pay")
 	{
-		pay.POST("/wx", controller.WxPay)   //微信支付
-		pay.POST("/aLi", controller.ALiPay) //微信支付
+		pay.POST("/wx", controller.WxPay)              //微信支付
+		pay.POST("/aLiApp", controller.ALiTradeAppPay) //支付宝APP支付
+		pay.POST("/aLiWap", controller.ALiTradeWapPay) //支付宝WAP支付
 	}
 }
