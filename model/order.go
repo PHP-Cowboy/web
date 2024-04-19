@@ -44,6 +44,11 @@ func (t *Order) GetFirstById(db *gorm.DB, id int) (data Order, err error) {
 	return
 }
 
+func (t *Order) GetOneByOrderNo(db *gorm.DB, orderNo string) (data Order, err error) {
+	err = db.Model(t).Where("order_no = ?", orderNo).First(&data).Error
+	return
+}
+
 func (t *Order) GetList(db *gorm.DB) (list []Order, err error) {
 	err = db.Model(t).Where(t).Find(&list).Error
 	return
