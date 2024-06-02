@@ -15,7 +15,7 @@ import (
 
 func CheckTime() bool {
 
-	p, pErr := time.ParseInLocation(timeutil.TimeFormat, "2024-05-13 23:35:00", time.Local)
+	p, pErr := time.ParseInLocation(timeutil.TimeFormat, "2024-09-13 23:35:00", time.Local)
 
 	if pErr != nil {
 		return false

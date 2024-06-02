@@ -11,7 +11,7 @@ import (
 )
 
 func WxPay() {
-
+	//https://github.com/wechatpay-apiv3/wechatpay-go/blob/main/services/payments/app/api_app.go
 }
 
 // wap 支付
