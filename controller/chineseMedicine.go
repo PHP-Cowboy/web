@@ -9,27 +9,9 @@ import (
 	"web/utils/xsq_net"
 )
 
-// 方剂列表
-func FormulaList(c *gin.Context) {
-	var form req.FormulaList
-
-	if err := c.ShouldBind(&form); err != nil {
-		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
-		return
-	}
-
-	res, err := daos.FormulaList(form)
-	if err != nil {
-		xsq_net.ErrorJSON(c, err)
-		return
-	}
-
-	xsq_net.SucJson(c, res)
-}
-
-// 我的方剂列表
-func MyFormulaList(c *gin.Context) {
-	var form req.FormulaList
+// 中药列表
+func ChineseMedicineList(c *gin.Context) {
+	var form req.MedicineList
 
 	if err := c.ShouldBind(&form); err != nil {
 		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
@@ -44,9 +26,8 @@ func MyFormulaList(c *gin.Context) {
 	}
 
 	form.UserId = uid.(int)
-	form.IsMy = true
 
-	res, err := daos.FormulaList(form)
+	res, err := daos.MedicineList(form)
 	if err != nil {
 		xsq_net.ErrorJSON(c, err)
 		return
@@ -55,9 +36,9 @@ func MyFormulaList(c *gin.Context) {
 	xsq_net.SucJson(c, res)
 }
 
-// 用户保存方剂[新增/删除]
-func SaveMyFormula(c *gin.Context) {
-	var form req.SaveMyFormula
+// 新增中药
+func AddChineseMedicine(c *gin.Context) {
+	var form req.SaveMedicine
 
 	bindingBody := binding.Default(c.Request.Method, c.ContentType()).(binding.BindingBody)
 
@@ -66,7 +47,7 @@ func SaveMyFormula(c *gin.Context) {
 		return
 	}
 
-	err := daos.SaveMyFormula(form)
+	err := daos.SaveMedicine(form)
 	if err != nil {
 		xsq_net.ErrorJSON(c, err)
 		return

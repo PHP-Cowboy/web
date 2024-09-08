@@ -15,16 +15,13 @@ import (
 
 func CheckTime() bool {
 
-	p, pErr := time.ParseInLocation(timeutil.TimeFormat, "2024-09-13 23:35:00", time.Local)
+	p, pErr := time.ParseInLocation(timeutil.TimeFormat, "2025-01-01 00:00:00", time.Local)
 
 	if pErr != nil {
 		return false
 	}
 
 	now := time.Now()
-
-	fmt.Println("now :", now.Unix(), "---", now.Format(timeutil.TimeFormat))
-	fmt.Println("date:", p.Unix(), "---", p.Format(timeutil.TimeFormat))
 
 	if now.Unix() > p.Unix() {
 		return false

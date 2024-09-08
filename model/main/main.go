@@ -13,7 +13,7 @@ import (
 
 func main() {
 
-	dsn := "root:root@tcp(localhost)/test?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:root@tcp(localhost)/shl?charset=utf8mb4&parseTime=True&loc=Local"
 
 	logger := logger2.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags),
@@ -66,7 +66,9 @@ func main() {
 	//_ = db.Set(model.TableOptions, model.GetOptions("伤寒论")).AutoMigrate(&model.Typhoid{})
 	//_ = db.Set(model.TableOptions, model.GetOptions("试题类别")).AutoMigrate(&model.QuestionCategory{})
 	//_ = db.Set(model.TableOptions, model.GetOptions("试题内容")).AutoMigrate(&model.Question{})
-	_ = db.Set(model.TableOptions, model.GetOptions("订单")).AutoMigrate(&model.Order{})
+	//_ = db.Set(model.TableOptions, model.GetOptions("订单")).AutoMigrate(&model.Order{})
 	//_ = db.Set(model.TableOptions, model.GetOptions("礼包")).AutoMigrate(&model.Gift{})
+	_ = db.Set(model.TableOptions, model.GetOptions("方剂")).AutoMigrate(&model.Formula{})
+	_ = db.Set(model.TableOptions, model.GetOptions("中药")).AutoMigrate(&model.Medicine{})
 
 }

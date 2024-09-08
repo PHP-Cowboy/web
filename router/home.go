@@ -36,7 +36,7 @@ func HomeRoute(g *gin.RouterGroup) {
 		ty.POST("/prev", controller.TyphoidPrev)                   //伤寒论上一章
 		ty.POST("/next", controller.TyphoidNext)                   //伤寒论下一章
 	}
-
+	//典籍
 	cs := h.Group("/classics")
 	{
 		cs.POST("/categoryList", controller.ClassicsCategoryList) //典籍分类列表
@@ -46,10 +46,30 @@ func HomeRoute(g *gin.RouterGroup) {
 		cs.POST("/prevBookContent", controller.PrevBookContent)   //上一章
 		cs.POST("/nextBookContent", controller.NextBookContent)   //下一章
 	}
+	//中药
+	cm := h.Group("/medicine/")
+	{
+		cm.GET("list", controller.ChineseMedicineList) //中药列表
+		cm.POST("add", controller.AddChineseMedicine)  //新增中药
+	}
+	//方剂
+	f := h.Group("/formula/")
+	{
+		f.GET("list", controller.FormulaList)             //方剂列表
+		f.GET("myFormulaList", controller.MyFormulaList)  //我的方剂列表
+		f.POST("saveMyFormula", controller.SaveMyFormula) //用户保存方剂[新增/删除]
+	}
+	//工具
 	t := h.Group("/tool")
 	{
 		t.POST("/list", controller.ToolList) //工具列表
 	}
+	//方剂合方模拟
+	combined := h.Group("/combined")
+	{
+		combined.GET("")
+	}
+	//思维导图
 	m := h.Group("/mind")
 	{
 		m.POST("/list", controller.MindMapList) //思维导图列表
@@ -88,7 +108,7 @@ func HomeRoute(g *gin.RouterGroup) {
 		q.POST("/prev", controller.QuestionPrev)                 //上一题
 		q.POST("/next", controller.QuestionNext)                 //下一题
 	}
-
+	//支付
 	pay := g.Group("pay")
 	{
 		pay.POST("/wx", controller.WxPay)              //微信支付
