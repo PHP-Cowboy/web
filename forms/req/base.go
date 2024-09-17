@@ -6,5 +6,5 @@ type Paging struct {
 }
 
 type Id struct {
-	Id int `json:"id" binding:"required,gt=0"`
+	Id int `json:"id" form:"id" binding:"required,gt=0"`
 }

@@ -27,6 +27,24 @@ func FormulaList(c *gin.Context) {
 	xsq_net.SucJson(c, res)
 }
 
+// 方剂详情
+func Formula(c *gin.Context) {
+	var form req.Id
+
+	if err := c.ShouldBind(&form); err != nil {
+		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
+		return
+	}
+
+	res, err := daos.Formula(form)
+	if err != nil {
+		xsq_net.ErrorJSON(c, err)
+		return
+	}
+
+	xsq_net.SucJson(c, res)
+}
+
 // 我的方剂列表
 func MyFormulaList(c *gin.Context) {
 	var form req.FormulaList

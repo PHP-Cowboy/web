@@ -7,14 +7,14 @@ import (
 	"web/model"
 )
 
-func MedicineList(form req.MedicineList) (res rsp.MedicineListRsp, err error) {
+func HerbList(form req.HerbList) (res rsp.HerbListRsp, err error) {
 	db := global.DB
 
-	obj := new(model.Medicine)
+	obj := new(model.Herb)
 
 	var (
 		total    int64
-		dataList []model.Medicine
+		dataList []model.Herb
 	)
 
 	total, dataList, err = obj.GetPageList(db, form)
@@ -22,12 +22,16 @@ func MedicineList(form req.MedicineList) (res rsp.MedicineListRsp, err error) {
 		return
 	}
 
-	list := make([]rsp.Medicine, 0, len(dataList))
+	list := make([]rsp.Herb, 0, len(dataList))
 
 	for _, d := range dataList {
-		list = append(list, rsp.Medicine{
-			Id:   d.Id,
-			Name: d.Name,
+		list = append(list, rsp.Herb{
+			Id:           d.Id,
+			Name:         d.Name,
+			Abbreviation: d.Abbreviation,
+			Nature:       d.Nature,
+			Brief:        d.Brief,
+			UserId:       d.UserId,
 		})
 	}
 
@@ -38,15 +42,18 @@ func MedicineList(form req.MedicineList) (res rsp.MedicineListRsp, err error) {
 	return
 }
 
-// 用户保存方剂
-func SaveMedicine(form req.SaveMedicine) (err error) {
+// 用户保存中药
+func SaveHerb(form req.SaveHerb) (err error) {
 	db := global.DB
 
-	obj := new(model.Medicine)
+	obj := new(model.Herb)
 
-	data := model.Medicine{
-		Name:   form.Name,
-		UserId: form.UserId,
+	data := model.Herb{
+		Name:         form.Name,
+		Abbreviation: form.Abbreviation,
+		Nature:       form.Nature,
+		Brief:        form.Brief,
+		UserId:       form.UserId,
 	}
 
 	err = obj.Create(db, data)

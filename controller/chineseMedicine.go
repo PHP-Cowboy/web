@@ -10,8 +10,8 @@ import (
 )
 
 // 中药列表
-func ChineseMedicineList(c *gin.Context) {
-	var form req.MedicineList
+func AddHerbList(c *gin.Context) {
+	var form req.HerbList
 
 	if err := c.ShouldBind(&form); err != nil {
 		xsq_net.ErrorJSON(c, ecode.ParamInvalid)
@@ -27,7 +27,7 @@ func ChineseMedicineList(c *gin.Context) {
 
 	form.UserId = uid.(int)
 
-	res, err := daos.MedicineList(form)
+	res, err := daos.HerbList(form)
 	if err != nil {
 		xsq_net.ErrorJSON(c, err)
 		return
@@ -37,8 +37,8 @@ func ChineseMedicineList(c *gin.Context) {
 }
 
 // 新增中药
-func AddChineseMedicine(c *gin.Context) {
-	var form req.SaveMedicine
+func AddHerb(c *gin.Context) {
+	var form req.SaveHerb
 
 	bindingBody := binding.Default(c.Request.Method, c.ContentType()).(binding.BindingBody)
 
@@ -47,7 +47,16 @@ func AddChineseMedicine(c *gin.Context) {
 		return
 	}
 
-	err := daos.SaveMedicine(form)
+	uid, ok := c.Get("uid")
+
+	if !ok {
+		xsq_net.ErrorJSON(c, ecode.UserNotLogin)
+		return
+	}
+
+	form.UserId = uid.(int)
+
+	err := daos.SaveHerb(form)
 	if err != nil {
 		xsq_net.ErrorJSON(c, err)
 		return
