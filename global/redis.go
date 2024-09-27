@@ -6,8 +6,6 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/go-redis/redis/v8"
-
 	"web/utils/str_util"
 	"web/utils/timeutil"
 )
@@ -48,6 +46,10 @@ func (r *RedisCli) Set(key, val string, second int) (string, error) {
 	return r.Cli.Set(context.Background(), key, val, time.Duration(second)*time.Second).Result()
 }
 
+func (r *RedisCli) HSet(key string, values ...interface{}) (err error) {
+	return r.Cli.HSet(context.Background(), key, values).Err()
+}
+
 func (r *RedisCli) Get(key string) (val string, err error) {
 	val, err = r.Cli.Get(context.Background(), key).Result()
 	if err == redis.Nil {
@@ -56,8 +58,23 @@ func (r *RedisCli) Get(key string) (val string, err error) {
 	return
 }
 
+func (r *RedisCli) GetFloat64(key string) (val float64, err error) {
+	val, err = r.Cli.Get(context.Background(), key).Float64()
+	return
+}
+
 func (r *RedisCli) SetNx(key string, val string) error {
 	ok, err := r.Cli.SetNX(context.Background(), key, val, 0).Result()
+
+	if !ok {
+		return errors.New("设置失败")
+	}
+
+	return err
+}
+
+func (r *RedisCli) SetNxExpire(key string, val string, d time.Duration) error {
+	ok, err := r.Cli.SetNX(context.Background(), key, val, d).Result()
 
 	if !ok {
 		return errors.New("设置失败")
