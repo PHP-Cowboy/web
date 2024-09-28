@@ -10,6 +10,7 @@ type ClassicsContent struct {
 	Base
 	ClassicsId int    `gorm:"type:int(11);not null;comment:所属典籍id"`
 	Title      string `gorm:"type:varchar(64);not null;comment:标题"`
+	Chapter    string `gorm:"type:varchar(128);not null;comment:章节"`
 	Content    string `gorm:"type:text;not null;comment:内容"`
 }
 

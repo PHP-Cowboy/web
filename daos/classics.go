@@ -101,6 +101,7 @@ func CatalogueList(form req.CatalogueList) (res rsp.CatalogueRsp, err error) {
 			Id:         cl.ClassicsId,
 			ClassicsId: cl.ClassicsId,
 			Title:      cl.Title,
+			Chapter:    cl.Chapter,
 		})
 	}
 

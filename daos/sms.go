@@ -1,12 +1,10 @@
 package daos
 
 import (
-	"encoding/json"
 	"fmt"
 	util "github.com/alibabacloud-go/tea-utils/v2/service"
 	"github.com/alibabacloud-go/tea/tea"
 	"math/rand"
-	"strings"
 	"sync"
 	"time"
 	"web/forms/req"
@@ -47,8 +45,8 @@ func SendMsg(form req.SendMsg) (err error) {
 
 	sendSmsRequest := &dysmsapi20170525.SendSmsRequest{
 		PhoneNumbers:  tea.String(form.Phone),
-		SignName:      tea.String("验证码短信"),
-		TemplateCode:  tea.String("SMS_305495877"),
+		SignName:      tea.String("襄都区经方软件工作室"),
+		TemplateCode:  tea.String("SMS_474200091"),
 		TemplateParam: tea.String(fmt.Sprintf("{\"code\":\"%v\"}", code)),
 	}
 
@@ -64,27 +62,8 @@ func SendMsg(form req.SendMsg) (err error) {
 	_, err = client.SendSmsWithOptions(sendSmsRequest, runtime)
 
 	if err != nil {
-		var sdkErr = &tea.SDKError{}
-		if _t, ok := err.(*tea.SDKError); ok {
-			sdkErr = _t
-		} else {
-			sdkErr.Message = tea.String(err.Error())
-		}
-		// 此处仅做打印展示，请谨慎对待异常处理，在工程项目中切勿直接忽略异常。
-		// 错误 message
-		fmt.Println(tea.StringValue(sdkErr.Message))
-		// 诊断地址
-		var data interface{}
-		d := json.NewDecoder(strings.NewReader(tea.StringValue(sdkErr.Data)))
-		_ = d.Decode(&data)
-		if m, ok := data.(map[string]interface{}); ok {
-			recommend, _ := m["Recommend"]
-			fmt.Println(recommend)
-		}
-		_, err = util.AssertAsString(sdkErr.Message)
-		if err != nil {
-			return err
-		}
+		global.Logger["err"].Errorf("sms NewClient.SendSmsWithOptions failed,err:%v")
+		return
 	}
 
 	return nil

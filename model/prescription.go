@@ -13,10 +13,14 @@ type Prescription struct {
 	TongueQuality string `gorm:"type:varchar(64);not null;default:'';comment:舌质"`
 	CoatedTongue  string `gorm:"type:varchar(64);not null;default:'';comment:舌苔"`
 	Pulse         string `gorm:"type:varchar(64);not null;default:'';comment:脉象"`
+	Article       string `gorm:"type:varchar(1024);not null;default:'';comment:条文"`
 	ModernDisease string `gorm:"type:varchar(64);not null;default:'';comment:现代疾病"`
 	SymptomPic    string `gorm:"type:varchar(255);not null;default:'';comment:症状图"`
 	PulsePic      string `gorm:"type:varchar(64);not null;default:'';comment:脉象图"`
 	TonguePic     string `gorm:"type:varchar(64);not null;default:'';comment:舌象图"`
+	SymptomNum    int    `gorm:"type:int;not null;default:0;comment:症状总数"`
+	PulseNum      int    `gorm:"type:int;not null;default:0;comment:脉象总数"`
+	TongueNum     int    `gorm:"type:int;not null;default:0;comment:舌象总数"`
 }
 
 func (t *Prescription) GetFirst(db *gorm.DB, form req.Id) (m Prescription, err error) {

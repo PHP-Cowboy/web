@@ -47,7 +47,7 @@ func main() {
 	//_ = db.Set(model.TableOptions, model.GetOptions("医疗案例")).AutoMigrate(&model.MedicalCases{})
 	//_ = db.Set(model.TableOptions, model.GetOptions("典籍分类")).AutoMigrate(&model.ClassicsCategory{})
 	//_ = db.Set(model.TableOptions, model.GetOptions("典籍")).AutoMigrate(&model.Classics{})
-	//_ = db.Set(model.TableOptions, model.GetOptions("典籍内容")).AutoMigrate(&model.ClassicsContent{})
+	_ = db.Set(model.TableOptions, model.GetOptions("典籍内容")).AutoMigrate(&model.ClassicsContent{})
 	//_ = db.Set(model.TableOptions, model.GetOptions("工具")).AutoMigrate(&model.Tool{})
 	//_ = db.Set(model.TableOptions, model.GetOptions("大数据")).AutoMigrate(&model.BigData{})
 	//_ = db.Set(model.TableOptions, model.GetOptions("大数据分类")).AutoMigrate(&model.BigDataCategory{})
@@ -60,7 +60,7 @@ func main() {
 	//_ = db.Set(model.TableOptions, model.GetOptions("常用方剂")).AutoMigrate(&model.CommonlyPrescription{})
 	//_ = db.Set(model.TableOptions, model.GetOptions("常用方剂分类")).AutoMigrate(&model.CommonlyPrescriptionCategory{})
 	//_ = db.Set(model.TableOptions, model.GetOptions("方剂大全")).AutoMigrate(&model.CompleteCollectionPrescription{})
-	//_ = db.Set(model.TableOptions, model.GetOptions("大数据方剂")).AutoMigrate(&model.Prescription{})
+	_ = db.Set(model.TableOptions, model.GetOptions("大数据方剂")).AutoMigrate(&model.Prescription{})
 	//_ = db.Set(model.TableOptions, model.GetOptions("大数据方剂名家")).AutoMigrate(&model.Celebrity{})
 	//_ = db.Set(model.TableOptions, model.GetOptions("大数据方剂图表")).AutoMigrate(&model.PrescriptionGraph{})
 	//_ = db.Set(model.TableOptions, model.GetOptions("伤寒论")).AutoMigrate(&model.Typhoid{})
@@ -71,6 +71,6 @@ func main() {
 	//_ = db.Set(model.TableOptions, model.GetOptions("方剂")).AutoMigrate(&model.Formula{})
 	//_ = db.Set(model.TableOptions, model.GetOptions("中药")).AutoMigrate(&model.Herb{})
 	//_ = db.Set(model.TableOptions, model.GetOptions("方剂剂量表")).AutoMigrate(&model.Dose{})
-	_ = db.Set(model.TableOptions, model.GetOptions("短信表")).AutoMigrate(&model.Msg{})
+	//_ = db.Set(model.TableOptions, model.GetOptions("短信表")).AutoMigrate(&model.Msg{})
 
 }

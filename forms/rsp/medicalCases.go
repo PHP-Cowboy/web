@@ -47,6 +47,7 @@ type Catalogue struct {
 	Id         int    `json:"id"`
 	ClassicsId int    `json:"classics_id"`
 	Title      string `json:"title"`
+	Chapter    string `json:"chapter"`
 	Content    string `json:"content"`
 }
 
