@@ -21,7 +21,7 @@ type LoginByPwd struct {
 
 type LoginByCode struct {
 	Phone string `json:"phone" binding:"required"`
-	Code  int    `json:"code" binding:"required"`
+	Code  string `json:"code" binding:"required"`
 }
 
 type LoginParams struct {

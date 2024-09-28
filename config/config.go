@@ -6,6 +6,7 @@ type ServerConfig struct {
 	JwtInfo   JWTConfig   `json:"jwtInfo"`
 	Sms       Sms         `json:"sms"`
 	ThirdApp  ThirdApp    `json:"thirdApp"`
+	AliCloud  AliCloud    `json:"aliCloud"`
 }
 
 type MysqlConfig struct {
@@ -25,6 +26,11 @@ type JWTConfig struct {
 type Sms struct {
 	AppKey string `json:"appKey"`
 	Secret string `json:"secret"`
+}
+
+type AliCloud struct {
+	AccessKeyId     string `json:"accessKeyId"`
+	AccessKeySecret string `json:"accessKeySecret"`
 }
 
 type ThirdApp struct {

@@ -11,6 +11,10 @@ func BaseRoute(g *gin.RouterGroup) {
 		//验证码
 		baseGroup.GET("/captcha", controller.GetCaptcha)
 	}
+	sms := g.Group("/sms/")
+	{
+		sms.POST("send", controller.SendMsg)
+	}
 
 	test := g.Group("/test")
 

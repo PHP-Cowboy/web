@@ -62,12 +62,44 @@ func LoginByCode(form req.LoginByCode) (token string, err error) {
 	//	return
 	//}
 
+	//阿里云
+	if !LocalCheckCode(form) {
+		err = ecode.CheckCaptchaError
+		return
+	}
+
 	token, err = Login(req.LoginParams{
 		Type:  1,
 		Param: form.Phone,
 	})
 
 	return
+}
+
+// 验证验证码：先发短信后验证版
+func LocalCheckCode(form req.LoginByCode) bool {
+	db := global.DB
+
+	obj := new(model.Msg)
+
+	msg, err := obj.GetCodeByPhone(db, form.Phone)
+	if err != nil {
+		global.Logger["err"].Errorf("LocalCheckCode obj.GetCodeByPhone failed,err:%v", err.Error())
+		return false
+	}
+
+	if msg.Code != form.Code {
+		global.Logger["err"].Infof("LocalCheckCode msg.Code != form.Code, msg.Code:%v,form.Code:%v", msg.Code, form.Code)
+		return false
+	}
+
+	err = obj.UpdateStatusById(db, msg.Id)
+	if err != nil {
+		global.Logger["err"].Errorf("LocalCheckCode obj.UpdateStatusById failed,err:%v", err.Error())
+		return false
+	}
+
+	return true
 }
 
 func Login(p req.LoginParams) (token string, err error) {

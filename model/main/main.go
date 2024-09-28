@@ -68,8 +68,9 @@ func main() {
 	//_ = db.Set(model.TableOptions, model.GetOptions("试题内容")).AutoMigrate(&model.Question{})
 	//_ = db.Set(model.TableOptions, model.GetOptions("订单")).AutoMigrate(&model.Order{})
 	//_ = db.Set(model.TableOptions, model.GetOptions("礼包")).AutoMigrate(&model.Gift{})
-	_ = db.Set(model.TableOptions, model.GetOptions("方剂")).AutoMigrate(&model.Formula{})
-	_ = db.Set(model.TableOptions, model.GetOptions("中药")).AutoMigrate(&model.Herb{})
-	_ = db.Set(model.TableOptions, model.GetOptions("方剂剂量表")).AutoMigrate(&model.Dose{})
+	//_ = db.Set(model.TableOptions, model.GetOptions("方剂")).AutoMigrate(&model.Formula{})
+	//_ = db.Set(model.TableOptions, model.GetOptions("中药")).AutoMigrate(&model.Herb{})
+	//_ = db.Set(model.TableOptions, model.GetOptions("方剂剂量表")).AutoMigrate(&model.Dose{})
+	_ = db.Set(model.TableOptions, model.GetOptions("短信表")).AutoMigrate(&model.Msg{})
 
 }
