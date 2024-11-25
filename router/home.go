@@ -49,15 +49,15 @@ func HomeRoute(g *gin.RouterGroup) {
 	//中药
 	cm := h.Group("/herb/")
 	{
-		cm.GET("list", controller.AddHerbList) //中药列表
-		cm.POST("add", controller.AddHerb)     //新增中药
+		cm.POST("list", controller.AddHerbList) //中药列表
+		cm.POST("add", controller.AddHerb)      //新增中药
 	}
 	//方剂
 	f := h.Group("/formula/")
 	{
-		f.GET("list", controller.FormulaList)             //方剂列表
-		f.GET("detail", controller.Formula)               //方剂详情
-		f.GET("myFormulaList", controller.MyFormulaList)  //我的方剂列表
+		f.POST("list", controller.FormulaList)            //方剂列表
+		f.POST("detail", controller.Formula)              //方剂详情
+		f.POST("myFormulaList", controller.MyFormulaList) //我的方剂列表
 		f.POST("saveMyFormula", controller.SaveMyFormula) //用户保存方剂[新增/删除]
 	}
 	//工具
@@ -68,7 +68,7 @@ func HomeRoute(g *gin.RouterGroup) {
 	//方剂合方模拟
 	combined := h.Group("/combined")
 	{
-		combined.GET("")
+		combined.POST("")
 	}
 	//思维导图
 	m := h.Group("/mind")

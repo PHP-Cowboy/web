@@ -23,6 +23,11 @@ func (t *Formula) GetOne(db *gorm.DB, form req.Id) (data Formula, err error) {
 	return
 }
 
+func (t *Formula) GetListByNameAndUserId(db *gorm.DB, name string, userId int) (list []Formula, err error) {
+	err = db.Model(t).Where("name = ?", name).Where("user_id = 0 or user_id = ?", userId).Find(&list).Error
+	return
+}
+
 func (t *Formula) GetPageList(db *gorm.DB, form req.FormulaList) (total int64, dataList []Formula, err error) {
 	localDb := db.Model(t)
 

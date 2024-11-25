@@ -1,6 +1,7 @@
 package daos
 
 import (
+	"errors"
 	"web/forms/req"
 	"web/forms/rsp"
 	"web/global"
@@ -108,7 +109,21 @@ func Formula(form req.Id) (res rsp.FormulaDetail, err error) {
 
 // 用户保存方剂
 func SaveMyFormula(form req.SaveMyFormula) (err error) {
-	tx := global.DB.Begin()
+	db := global.DB
+
+	//校验名称 不能和系统方剂同名也不能和自己已有的重名
+	formula := new(model.Formula)
+
+	formulaList, err := formula.GetListByNameAndUserId(db, form.Name, form.UserId)
+	if err != nil {
+		return err
+	}
+
+	if len(formulaList) > 0 {
+		return errors.New("方剂名称已存在")
+	}
+
+	tx := db.Begin()
 
 	data := model.Formula{
 		Name:         form.Name,

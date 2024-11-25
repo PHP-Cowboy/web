@@ -84,6 +84,15 @@ func SaveMyFormula(c *gin.Context) {
 		return
 	}
 
+	uid, ok := c.Get("uid")
+
+	if !ok {
+		xsq_net.ErrorJSON(c, ecode.UserNotLogin)
+		return
+	}
+
+	form.UserId = uid.(int)
+
 	err := daos.SaveMyFormula(form)
 	if err != nil {
 		xsq_net.ErrorJSON(c, err)
