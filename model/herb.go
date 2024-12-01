@@ -19,6 +19,11 @@ func (t *Herb) Create(db *gorm.DB, data Herb) error {
 	return db.Model(t).Create(&data).Error
 }
 
+func (t *Herb) GetListByNameAndUserId(db *gorm.DB, name string, userId int) (list []Herb, err error) {
+	err = db.Model(t).Where("name = ?", name).Where("user_id = 0 or user_id = ?", userId).Find(&list).Error
+	return
+}
+
 func (t *Herb) GetPageList(db *gorm.DB, form req.HerbList) (total int64, dataList []Herb, err error) {
 	localDb := db.Model(t).Where("user_id = ? or user_id = 0", form.UserId)
 

@@ -1,6 +1,7 @@
 package daos
 
 import (
+	"errors"
 	"web/forms/req"
 	"web/forms/rsp"
 	"web/global"
@@ -47,6 +48,16 @@ func SaveHerb(form req.SaveHerb) (err error) {
 	db := global.DB
 
 	obj := new(model.Herb)
+
+	list, err := obj.GetListByNameAndUserId(db, form.Name, form.UserId)
+
+	if err != nil {
+		return err
+	}
+
+	if len(list) > 0 {
+		return errors.New("中药名称已存在")
+	}
 
 	data := model.Herb{
 		Name:         form.Name,

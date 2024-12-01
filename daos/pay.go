@@ -2,7 +2,7 @@ package daos
 
 import (
 	"fmt"
-	"github.com/smartwalle/alipay/v3"
+	alipay "github.com/smartwalle/alipay/v3"
 	"net/url"
 	"web/common/constant"
 	"web/forms/req"
