@@ -115,5 +115,7 @@ func HomeRoute(g *gin.RouterGroup) {
 		pay.POST("/wx", controller.WxPay)              //微信支付
 		pay.POST("/aLiApp", controller.ALiTradeAppPay) //支付宝APP支付
 		pay.POST("/aLiWap", controller.ALiTradeWapPay) //支付宝WAP支付
+		pay.POST("/aLiNotify", controller.ALiNotify)   //阿里支付回调
+		pay.POST("/wxNotify", controller.WxNotify)     //微信支付回调
 	}
 }

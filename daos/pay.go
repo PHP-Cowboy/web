@@ -1,9 +1,12 @@
 package daos
 
 import (
+	"errors"
 	"fmt"
 	alipay "github.com/smartwalle/alipay/v3"
 	"net/url"
+	"strconv"
+	"time"
 	"web/common/constant"
 	"web/forms/req"
 	"web/global"
@@ -93,6 +96,57 @@ func ALiPay(orderNo string) (client *alipay.Client, trade alipay.Trade, err erro
 	return
 }
 
-func ALiNotify() {
+func Notify(orderNo string) (err error) {
+	db := global.DB
 
+	orderObj := new(model.Order)
+
+	orderData, err := orderObj.GetOneByOrderNo(db, orderNo)
+	if err != nil {
+		global.Logger["err"].Errorf("ALiNotify orderObj.GetOneByOrderNo failed,err:%s,order_no:%s", err.Error(), orderNo)
+		return
+	}
+
+	giftObj := new(model.Gift)
+
+	giftData, err := giftObj.GetFirstById(db, orderData.GiftId)
+	if err != nil {
+		global.Logger["err"].Errorf("ALiNotify giftObj.GetFirstById failed,err:%s,gift id:%v", err.Error(), orderData.GiftId)
+		return err
+	}
+
+	userObj := new(model.User)
+
+	userData, err := userObj.GetFirstByPk(db, orderData.Uid)
+	if err != nil {
+		global.Logger["err"].Errorf("ALiNotify userObj.GetFirstByPk failed,err:%s,user id:%v", err.Error(), orderData.Uid)
+		return
+	}
+
+	//永久会员
+	if giftData.MemberMonth == 0 {
+		userData.MemberLevel = model.UserMemberLevelPermanent
+	} else if giftData.MemberMonth > 0 {
+		userData.MemberLevel = model.UserMemberLevelRegular
+
+		// 获取当前时间
+		now := time.Now()
+		// 计算下一天凌晨零点的时间
+		nextDay := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location()).AddDate(0, 0, 1)
+		// 增加时间月份数
+		targetTime := nextDay.AddDate(0, giftData.MemberMonth, 0)
+		// 获取时间戳（秒）
+		userData.MemberExpire = int(targetTime.Unix())
+	} else {
+		err = errors.New("礼包数据异常:gift id:" + strconv.Itoa(giftData.Id))
+		return
+	}
+
+	err = userData.Save(db)
+	if err != nil {
+		global.Logger["err"].Errorf("ALiNotify userData.Save failed,err:%s", err.Error())
+		return
+	}
+
+	return
 }
